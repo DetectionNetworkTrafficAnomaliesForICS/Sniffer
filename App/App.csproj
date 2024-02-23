@@ -60,7 +60,21 @@
 
     <ItemGroup>
       <AdditionalFiles Include="View\Pages\AboutPage.xaml" />
+      <AdditionalFiles Include="View\Pages\MainPage.xaml" />
       <AdditionalFiles Include="View\Pages\SettingPage.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="View\Pages\HomePage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="View\Pages\HomePage.xaml.cs">
+        <DependentUpon>MainPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

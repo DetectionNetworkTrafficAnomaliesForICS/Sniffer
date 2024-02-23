@@ -6,6 +6,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="using:Sniffer.View.Pages">
     
+    <FlyoutItem Title="Main" Icon="{AppThemeBinding Light=home_light.png, Dark=home_dark.png}">
+        <ShellContent Route="MainPage" ContentTemplate="{DataTemplate pages:HomePage}" />
+    </FlyoutItem>
+    
     <FlyoutItem Title="Setting" Icon="{AppThemeBinding Light=settings_light.png, Dark=settings_dark.png}">
         <ShellContent Route="SettingPage" ContentTemplate="{DataTemplate pages:SettingPage}" />
     </FlyoutItem>
