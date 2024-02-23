@@ -49,7 +49,32 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="View\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="View\Pages\AboutPage.xaml" />
+      <AdditionalFiles Include="View\Pages\MainPage.xaml" />
+      <AdditionalFiles Include="View\Pages\SettingPage.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="View\Pages\HomePage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="View\Pages\HomePage.xaml.cs">
+        <DependentUpon>MainPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
