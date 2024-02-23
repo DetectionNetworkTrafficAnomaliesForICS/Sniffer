@@ -58,4 +58,9 @@
       <Folder Include="View\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="View\Pages\AboutPage.xaml" />
+      <AdditionalFiles Include="View\Pages\SettingPage.xaml" />
+    </ItemGroup>
+
 </Project>

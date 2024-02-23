@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
-using Sniffer.Pages;
+using Sniffer.View.Pages;
 using Sniffer.ViewModels;
 
 namespace Sniffer;
@@ -34,5 +34,7 @@ public static class MauiProgram
     {
         services.AddSingleton<AboutPage>();
         services.AddSingleton<AboutViewModel>();
+        services.AddSingleton<SettingPage>();
+        services.AddSingleton<SettingViewModel>();
     }
 }

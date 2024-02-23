@@ -1,4 +1,4 @@
-﻿using Sniffer.Pages;
+﻿using Sniffer.View.Pages;
 
 namespace Sniffer;
 

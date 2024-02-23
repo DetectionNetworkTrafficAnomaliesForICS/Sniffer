@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sniffer.ViewModels;
+﻿using Sniffer.ViewModels;
 
-namespace Sniffer.Pages;
+namespace Sniffer.View.Pages;
 
 public partial class AboutPage : ContentPage
 {

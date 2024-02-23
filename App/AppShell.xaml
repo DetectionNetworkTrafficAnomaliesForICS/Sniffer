@@ -1,20 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <Shell
     x:Class="Sniffer.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Sniffer.Pages"
-    xmlns:Pages="clr-namespace:Sniffer.Pages"
-    Shell.FlyoutBehavior="Disabled">
-
-    <!-- <ShellContent -->
-    <!--     Title="Sniffer" -->
-    <!--     ContentTemplate="{DataTemplate local:MainPage}" -->
-    <!--     Route="MainPage" /> -->
-
-    <FlyoutItem Title="About" Icon="{AppThemeBinding Light=settings_light.png, Dark=settings_dark.png}">
-        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+    xmlns:pages="using:Sniffer.View.Pages">
+    
+    <FlyoutItem Title="Setting" Icon="{AppThemeBinding Light=settings_light.png, Dark=settings_dark.png}">
+        <ShellContent Route="SettingPage" ContentTemplate="{DataTemplate pages:SettingPage}" />
     </FlyoutItem>
 
+    <FlyoutItem Title="About" Icon="{AppThemeBinding Light=about_light.png, Dark=about_dark.png}">
+        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate pages:AboutPage}" />
+    </FlyoutItem>
     
 </Shell>
