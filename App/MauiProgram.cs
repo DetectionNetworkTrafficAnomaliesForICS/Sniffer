@@ -34,7 +34,11 @@ public static class MauiProgram
     {
         services.AddSingleton<AboutPage>();
         services.AddSingleton<AboutViewModel>();
+        
         services.AddSingleton<SettingPage>();
         services.AddSingleton<SettingViewModel>();
+        
+        services.AddSingleton<HomePage>();
+        services.AddSingleton<HomeViewModel>();
     }
 }
