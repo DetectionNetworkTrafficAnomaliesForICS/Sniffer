@@ -3,12 +3,18 @@
     x:Class="Sniffer.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Sniffer"
+    xmlns:local="clr-namespace:Sniffer.Pages"
+    xmlns:Pages="clr-namespace:Sniffer.Pages"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- <ShellContent -->
+    <!--     Title="Sniffer" -->
+    <!--     ContentTemplate="{DataTemplate local:MainPage}" -->
+    <!--     Route="MainPage" /> -->
 
+    <FlyoutItem Title="About" Icon="{AppThemeBinding Light=settings_light.png, Dark=settings_dark.png}">
+        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+    </FlyoutItem>
+
+    
 </Shell>

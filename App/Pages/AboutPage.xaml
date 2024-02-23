@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:Sniffer.ViewModels"
+             x:Class="Sniffer.Pages.AboutPage"
+             Title="About"
+             x:DataType="ViewModels:AboutViewModel">
+    
+    <StackLayout>
+        <Label Text="Description" FontSize="Large"/>
+        <Label Text="The program is a sniffer for catching TCP connection traffic of Modbus devices and saving them locally." />
+
+        <Label Text="Author" FontSize="Large" Margin="0,20,0,0" />
+        <StackLayout>
+            <Label Text="Name: Kotov Rodion" />
+            <Label Text="Company: Novosibirsk State University" />
+            <Label Text="Contact: tg: @kotovrodion" />
+            <Label Text="Blog: www.rodkot.site" />
+        </StackLayout>
+    </StackLayout>
+    
+     
+</ContentPage>
