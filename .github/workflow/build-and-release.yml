@@ -1,0 +1,92 @@
+# This workflow builds and releases the project on github
+
+# todo: rename android apk
+
+name: Build and Release
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+
+jobs:
+
+  # building the project for windows and android and uploading the build as artifacts
+  build-project:
+    name: Build project
+    runs-on: windows-latest
+    steps:
+      
+      # Checks-out repository under $GITHUB_WORKSPACE, so job can access it
+      - uses: actions/checkout@v3
+
+      - name: Receive Version (env.Tag_Name + env.Release_Name + env.Application_Version)
+        run: python ".github/workflows/receive-version.py"
+      
+      # Windows
+      - name: Build Windows
+        run: dotnet build "App/App.csproj" -c:Release -f:net7.0-windows10.0.19041.0 -p:WindowsPackageType=None -p:SelfContained=true -p:WindowsAppSDKSelfContained=true /p:ApplicationVersion=${{ env.Application_Version }}
+      - name: Upload Windows-Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-build
+          path: Sniffer\App\bin\Release\net7.0-windows10.0.19041.0\win10-x64
+          retention-days: 1
+
+  # Creates GitHub-Release with Release-Notes   
+  release-project:
+    name: Release Project
+    runs-on: windows-latest
+    permissions: write-all
+    needs: build-project
+    steps:
+      
+      # Need to checkout again
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      # needs to run again for this job
+      - name: Receive Version (env.Tag_Name + env.Release_Name + env.Application_Version)
+        run: python ".github/workflows/receive-version.py"
+      
+      # Download previous artifacts and zip em up
+      - name: Download windows artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: windows-build
+          path: ./download/windows
+
+      - name: Zip windows build
+        uses: thedoctor0/zip-release@master
+        with:
+          path: ./download/windows/
+          filename: windows-build.zip
+
+      # Creating Release Log
+      # Needs to fetch before otherwise doesn't know last commits
+      - name: Git Fetch
+        shell: bash
+        run: git fetch --depth=500
+
+      - name: create release-notes.md
+        run: bash ".github/workflows/create-release-notes.sh" "${{ github.repository }}" ${{ env.Tag_Name }}
+
+      - name: show release log file
+        run: cat "${{ github.workspace }}\release-notes.md"
+
+      - name: workspace directory
+        shell: bash
+        run: echo "${{ github.workspace }}\release-notes.md"
+
+      - name: list files
+        run: ls
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "${{ env.Tag_Name }}"
+          name: "${{ env.Release_Name }}"
+          body_path: "${{ github.workspace }}\\release-notes.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            windows-build.zip
