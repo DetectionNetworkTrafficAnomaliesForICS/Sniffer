@@ -6,4 +6,22 @@
              Title="Home"
              x:DataType="ViewModels:HomeViewModel">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="DisabledButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#999999" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+        <Label x:Name="timerLabel" Text="{Binding TimerText}" FontSize="100" HorizontalOptions="CenterAndExpand"/>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Start" Command="{Binding  StartSnifferCommand}" HorizontalOptions="CenterAndExpand"
+                    IsEnabled="{Binding IsStartButtonEnabled}" />
+            <Button Text="Stop" Command="{Binding  StopSnifferCommand}" HorizontalOptions="CenterAndExpand"
+                    IsEnabled="{Binding IsStopButtonEnabled}"/>
+        </StackLayout>
+    </StackLayout>
+    
 </ContentPage>
