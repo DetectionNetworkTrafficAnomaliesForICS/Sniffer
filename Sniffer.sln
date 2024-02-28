@@ -2,6 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sniffer.Lib", "Sniffer.Lib\Sniffer.Lib.csproj", "{67B2750A-17DE-4A6A-8820-E0FCB424F467}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sniffer.Core", "Sniffer.Core\Sniffer.Core.csproj", "{BC447A01-1E32-410A-A5ED-C54CA2370864}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
