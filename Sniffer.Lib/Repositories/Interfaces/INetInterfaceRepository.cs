@@ -1,7 +1,6 @@
-﻿using Windows.Devices.SmartCards;
-using Sniffer.Models;
+﻿using Sniffer.Lib.Models;
 
-namespace Sniffer.Repositories;
+namespace Sniffer.Lib.Repositories.Interfaces;
 
 public interface INetInterfaceRepository
 {

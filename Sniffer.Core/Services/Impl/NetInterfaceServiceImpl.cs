@@ -1,7 +1,8 @@
-﻿using Sniffer.Models;
-using Sniffer.Repositories;
+﻿using Sniffer.Lib.Models;
+using Sniffer.Lib.Repositories.Interfaces;
+using Sniffer.Lib.Services.Interfaces;
 
-namespace Sniffer.Services.Impl;
+namespace Sniffer.Core.Services.Impl;
 
 public class NetInterfaceServiceImpl : INetService
 {

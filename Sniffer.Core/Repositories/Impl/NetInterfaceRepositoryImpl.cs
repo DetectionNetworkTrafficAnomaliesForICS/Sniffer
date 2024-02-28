@@ -1,7 +1,8 @@
 ﻿using System.Net.NetworkInformation;
-using Sniffer.Models;
+using Sniffer.Lib.Models;
+using Sniffer.Lib.Repositories.Interfaces;
 
-namespace Sniffer.Repositories.Impl;
+namespace Sniffer.Core.Repositories.Impl;
 
 public class NetInterfaceRepositoryImpl : INetInterfaceRepository
 {

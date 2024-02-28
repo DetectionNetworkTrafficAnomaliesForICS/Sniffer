@@ -1,27 +1,25 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using Sniffer.Models;
-using Sniffer.Repositories;
-using Directory = Sniffer.Models.Directory;
+using Sniffer.Core.Repositories;
+using Sniffer.Lib.Models;
+using Sniffer.Lib.Repositories.Interfaces;
+using Sniffer.Lib.Services.Interfaces;
 
-namespace Sniffer.Services.Impl;
+namespace Sniffer.Core.Services.Impl;
 
-public sealed class SettingsServiceImpl : ISettingsService
+public class SettingsServiceImpl : ISettingsService
 {
     private readonly INetInterfaceRepository _netInterfaceRepository;
     private readonly IDirectoryRepository _directoryRepository;
     private readonly IPreferenceRepository _preferenceRepository;
 
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    public Directory TrafficDirectory
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public Folder TrafficFolder
     {
-        get => _preferenceRepository.Get(nameof(TrafficDirectory), _directoryRepository.GetDefaultDirectory());
-        set => _preferenceRepository.Set(nameof(TrafficDirectory), value);
+        get => _preferenceRepository.Get(nameof(TrafficFolder), _directoryRepository.GetDefaultDirectory());
+        set => _preferenceRepository.Set(nameof(TrafficFolder), value);
     }
-
-    public NetInterface NetInterface 
+    
+    public NetInterface NetInterface
     {
         get => _preferenceRepository.Get(nameof(NetInterface), _netInterfaceRepository.GetDefaultGateway());
         set => _preferenceRepository.Set(nameof(NetInterface), value);
@@ -33,6 +31,5 @@ public sealed class SettingsServiceImpl : ISettingsService
         _netInterfaceRepository = netInterfaceRepository;
         _directoryRepository = directoryRepository;
         _preferenceRepository = preferenceRepository;
-        
     }
 }
