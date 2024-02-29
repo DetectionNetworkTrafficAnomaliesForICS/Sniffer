@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sniffer.Lib", "Sniffer.Lib\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sniffer.Core", "Sniffer.Core\Sniffer.Core.csproj", "{BC447A01-1E32-410A-A5ED-C54CA2370864}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sniffer.CLI", "Sniffer.CLI\Sniffer.CLI.csproj", "{F9055DC6-BC49-4E7B-A6F4-3C7B489E8F1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
