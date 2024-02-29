@@ -19,10 +19,10 @@ public class SettingsServiceImpl : ISettingsService
         set => _preferenceRepository.Set(nameof(TrafficFolder), value);
     }
     
-    public NetInterface NetInterface
+    public INetDevice NetDevice
     {
-        get => _preferenceRepository.Get(nameof(NetInterface), _netInterfaceRepository.GetDefaultGateway());
-        set => _preferenceRepository.Set(nameof(NetInterface), value);
+        get => _preferenceRepository.Get(nameof(NetDevice), _netInterfaceRepository.GetDefault());
+        set => _preferenceRepository.Set(nameof(NetDevice), value);
     }
 
     public SettingsServiceImpl(INetInterfaceRepository netInterfaceRepository, IDirectoryRepository directoryRepository,

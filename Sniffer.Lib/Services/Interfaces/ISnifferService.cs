@@ -4,5 +4,5 @@ namespace Sniffer.Lib.Services.Interfaces;
 
 public interface ISnifferService
 {
-    public Task ListenTrafficByDevice(Folder folder, NetInterface netInterface);
+    public List<INetPacket> CapturePackets(INetDevice netDevice);
 }
