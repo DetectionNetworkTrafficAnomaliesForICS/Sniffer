@@ -4,7 +4,6 @@ namespace Sniffer.Lib.Repositories.Interfaces;
 
 public interface INetInterfaceRepository
 {
-    List<NetInterface> GetAll();
-    NetInterface GetDefaultGateway();
-    NetInterface GetLoopback();
+    List<INetDevice> GetAll();
+    INetDevice GetDefault();
 }

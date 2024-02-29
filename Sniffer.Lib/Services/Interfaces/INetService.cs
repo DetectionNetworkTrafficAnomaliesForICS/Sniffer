@@ -4,5 +4,5 @@ namespace Sniffer.Lib.Services.Interfaces;
 
 public interface INetService
 {
-    List<NetInterface> GetAll();
+    List<INetDevice> GetAll();
 }

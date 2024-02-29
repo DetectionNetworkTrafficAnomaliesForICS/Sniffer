@@ -13,7 +13,7 @@ public class NetInterfaceServiceImpl : INetService
         _interfaceRepository = interfaceRepository;
     }
 
-    public List<NetInterface> GetAll()
+    public List<INetDevice> GetAll()
     {
         return _interfaceRepository.GetAll();
     }
