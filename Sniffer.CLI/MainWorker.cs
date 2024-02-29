@@ -5,11 +5,13 @@ namespace Sniffer.CLI;
 
 public class MainWorker : BackgroundService
 {
-    private SettingCommands _settingCommands;
+    private readonly SettingCommands _settingCommands;
+    private readonly SnifferCommands _snifferCommands;
 
-    public MainWorker(SettingCommands settingCommands)
+    public MainWorker(SettingCommands settingCommands, SnifferCommands snifferCommands)
     {
         _settingCommands = settingCommands;
+        _snifferCommands = snifferCommands;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -30,7 +32,7 @@ public class MainWorker : BackgroundService
             switch (choice)
             {
                 case "1":
-                    //DisplayGreeting();
+                    _snifferCommands.Run();
                     break;
                 case "2":
                     _settingCommands.Run();
