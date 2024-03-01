@@ -1,4 +1,4 @@
-﻿using Sniffer.Lib.Models;
+﻿using Sniffer.Core.Models;
 using Sniffer.Lib.Services.Interfaces;
 
 namespace Sniffer.CLI.Commands;
@@ -102,7 +102,7 @@ public class SettingCommands
                 case "2":
                     Console.Write("Enter path: ");
                     var path = Console.ReadLine();
-                    if (path != null) _settingsService.TrafficFolder = new Folder(path);
+                    if (path != null) _settingsService.TrafficFolder = new SystemFolder(path);
                     break;
                 case "3":
                     Console.WriteLine("Exiting Setting.");

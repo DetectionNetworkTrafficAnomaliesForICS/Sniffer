@@ -4,5 +4,5 @@ namespace Sniffer.Lib.Services.Interfaces;
 
 public interface IDirectoryService
 {
-    public Task<Folder> PickDirectory();
+    public Task<IFolder> PickDirectory();
 }

@@ -13,7 +13,7 @@ public class SettingsServiceImpl : ISettingsService
     private readonly IPreferenceRepository _preferenceRepository;
 
     public event PropertyChangedEventHandler? PropertyChanged;
-    public Folder TrafficFolder
+    public IFolder TrafficFolder
     {
         get => _preferenceRepository.Get(nameof(TrafficFolder), _directoryRepository.GetDefaultDirectory());
         set => _preferenceRepository.Set(nameof(TrafficFolder), value);

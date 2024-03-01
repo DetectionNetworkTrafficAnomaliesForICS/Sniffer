@@ -1,12 +1,13 @@
-﻿using Sniffer.Lib.Models;
+﻿using Sniffer.Core.Models;
+using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 
 namespace Sniffer.Core.Repositories.Impl;
 public class DirectoryRepositoryImpl : IDirectoryRepository
 {
-    public Folder GetDefaultDirectory()
+    public IFolder GetDefaultDirectory()
     {
         var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        return new Folder(currentDirectory);
+        return new SystemFolder(currentDirectory);
     }
 }
