@@ -20,10 +20,21 @@ public class PcapPacket : INetPacket
             ipPacket.SourceAddress.ToString());
         DestinationDevice = new INetPacket.Device(tcpPacket.DestinationPort, ipPacket.DestinationAddress.ToString(),
             ethernetPacket.DestinationHardwareAddress.ToString());
+        
+        Ttl = (uint)ipPacket.TimeToLive;
+        AcknowledgementNumber = tcpPacket.AcknowledgmentNumber;
+        SequenceNumber = tcpPacket.SequenceNumber;
+        CheckSum = tcpPacket.Checksum;
         Data = tcpPacket.PayloadData;
     }
 
     public INetPacket.Device SourceDevice { get; }
     public INetPacket.Device DestinationDevice { get; }
+    
+    public uint Ttl { get; }
+    public uint SequenceNumber { get; }
+    public uint AcknowledgementNumber { get; }
+    public uint CheckSum { get; }
+    
     public byte[] Data { get; }
 }
