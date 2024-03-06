@@ -15,7 +15,15 @@ public class SnifferCommands
 
     public void Run()
     {
-        var packets = _snifferService.CapturePackets(_settingsService.NetDevice);
-        packets.ForEach(packet => Console.WriteLine($"{packet.SourceDevice}->{packet.DestinationDevice}"));
+        if (_settingsService.NetDevice!=null)
+        {
+            var packets = _snifferService.CapturePackets(_settingsService.NetDevice);
+            packets.ForEach(packet => Console.WriteLine($"{packet.SourceDevice}->{packet.DestinationDevice}"));
+        }
+        else
+        {
+            Console.WriteLine("Net Device not selected!");
+        }
+        
     }
 }

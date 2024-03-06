@@ -25,13 +25,12 @@ public class PcapDevice : INetDevice
     public void Open()
     {
         _captureDevice.OnPacketArrival += PacketEventHandler;
-        _captureDevice.Open(DeviceModes.Promiscuous, 1000);
+        _captureDevice.Open(DeviceModes.Promiscuous);
     }
 
     public void Start()
     {
-        string filter = "tcp";
-        _captureDevice.Filter = filter;
+        _captureDevice.Filter = "tcp";
         _captureDevice.StartCapture();
     }
 

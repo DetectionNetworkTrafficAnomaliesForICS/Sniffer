@@ -66,12 +66,13 @@ public class SettingCommands
                     {
                         Console.WriteLine($"{i}. {devices[i]}");
                     }
-                    
+
                     var input = Console.ReadLine();
                     if (int.TryParse(input, out var index))
                     {
                         _settingsService.NetDevice = devices[index];
                     }
+
                     break;
                 case "3":
                     Console.WriteLine("Exiting Setting.");

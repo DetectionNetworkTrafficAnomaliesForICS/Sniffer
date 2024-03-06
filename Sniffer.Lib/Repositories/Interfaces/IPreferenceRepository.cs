@@ -2,6 +2,6 @@
 
 public interface IPreferenceRepository
 {
-    public void Set<T>(string key, T value);
-    public T Get<T>(string key, T defValue);
+    public bool TrySet<T>(string key, T value) where T : class;
+    public bool TryGet<T>(string key, out T? result, T? defaultValue = default) where T : class;
 }

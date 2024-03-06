@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using SharpPcap;
+﻿using SharpPcap;
 using Sniffer.Core.Models;
 using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
@@ -9,20 +8,43 @@ namespace Sniffer.Core.Repositories.Impl;
 
 public class NetInterfaceRepositoryImpl : INetInterfaceRepository
 {
-    public INetDevice? Get(NetConfiguration config)
+    public bool TryGet(NetConfiguration config, out INetDevice? result, INetDevice? defaultValue = default)
     {
-        var allDevices = CaptureDeviceList.Instance;
-        return new PcapDevice(allDevices[config.Name]);
+        try
+        {
+            var allDevices = CaptureDeviceList.Instance;
+
+            result = new PcapDevice(allDevices[config.Name]);
+            return true;
+        }
+        catch (Exception)
+        {
+            result = defaultValue;
+            return false;
+        }
     }
 
     public List<INetDevice> GetAll()
     {
         var allDevices = CaptureDeviceList.Instance;
-        return allDevices != null ? allDevices.Select(device => new PcapDevice(device)).ToList<INetDevice>() : new List<INetDevice>();
+        return allDevices != null
+            ? allDevices.Select(device => new PcapDevice(device)).ToList<INetDevice>()
+            : new List<INetDevice>();
     }
 
-    public NetConfiguration GetDefault()
+    public bool TryGetDefault(out INetDevice? result)
     {
-        return new NetConfiguration(CaptureDeviceList.Instance[4].Name);
+        var allDevices = CaptureDeviceList.Instance;
+
+        try
+        {
+            result = new PcapDevice(allDevices[0]);
+            return true;
+        }
+        catch (Exception)
+        {
+            result = null;
+            return false;
+        }
     }
 }

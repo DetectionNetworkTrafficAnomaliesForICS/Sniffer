@@ -14,7 +14,7 @@ public class SnifferServiceImpl : ISnifferService
 
         device.Open();
 
-        device.OnPacketArrival += (sender, packet) =>
+        device.OnPacketArrival += (_, packet) =>
         {
             packets.Add(packet);
         };

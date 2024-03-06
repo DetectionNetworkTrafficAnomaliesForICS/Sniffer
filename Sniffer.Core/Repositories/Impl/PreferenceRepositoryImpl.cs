@@ -7,19 +7,39 @@ public class PreferenceRepositoryImpl : IPreferenceRepository
 {
     private readonly Dictionary<string, string> _dictionary = new();
 
-    public void Set<T>(string key, T value)
+    public bool TrySet<T>(string key, T value) where T : class
     {
-        var json = JsonSerializer.Serialize(value);
-        _dictionary[key] = json;
+        try
+        {
+            var json = JsonSerializer.Serialize(value);
+
+            _dictionary[key] = json;
+
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
     }
 
-    public T Get<T>(string key, T defValue)
+    public bool TryGet<T>(string key, out T? result, T? defaultValue = default) where T : class
     {
         if (_dictionary.TryGetValue(key, out var json))
         {
-            return JsonSerializer.Deserialize<T>(json) ?? defValue;
+            try
+            {
+                result = JsonSerializer.Deserialize<T>(json);
+                return true;
+            }
+            catch (JsonException)
+            {
+                result = defaultValue;
+                return false;
+            }
         }
 
-        return defValue;
+        result = defaultValue;
+        return false;
     }
 }

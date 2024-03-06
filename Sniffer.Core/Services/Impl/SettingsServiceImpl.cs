@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 using Sniffer.Lib.Services.Interfaces;
@@ -13,24 +14,46 @@ public class SettingsServiceImpl : ISettingsService
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public IFolder TrafficFolder
+    public IFolder? TrafficFolder
     {
         get
         {
-            var config = _preferenceRepository.Get(nameof(TrafficFolder), _directoryRepository.GetDefaultFolder());
-            return _directoryRepository.GetByConfiguration(config)!;
+            _preferenceRepository.TryGet<FolderConfiguration>(nameof(TrafficFolder), out var config);
+            if (config != null)
+            {
+                _directoryRepository.TryGetByConfiguration(config, out var folder);
+                return folder;
+            }
+
+            _directoryRepository.TryGetDefaultFolder(out var folderDefault);
+            return folderDefault;
         }
-        set => _preferenceRepository.Set(nameof(TrafficFolder), value.FolderConfiguration);
+        set
+        {
+            if (value != null)
+                _preferenceRepository.TrySet(nameof(TrafficFolder), value.FolderConfiguration);
+        }
     }
 
-    public INetDevice NetDevice
+    public INetDevice? NetDevice
     {
         get
         {
-            var config = _preferenceRepository.Get(nameof(NetDevice), _netInterfaceRepository.GetDefault());
-            return _netInterfaceRepository.Get(config)!;
-        }    
-        set => _preferenceRepository.Set(nameof(NetDevice), value?.NetConfiguration);
+            _preferenceRepository.TryGet<NetConfiguration>(nameof(NetDevice), out var config);
+            if (config != null)
+            {
+                _netInterfaceRepository.TryGet(config, out var device);
+                return device;
+            }
+
+            _netInterfaceRepository.TryGetDefault(out var deviceDefault);
+            return deviceDefault;
+        }
+        set
+        {
+            if (value != null)
+                _preferenceRepository.TrySet(nameof(NetDevice), value.NetConfiguration);
+        }
     }
 
     public SettingsServiceImpl(INetInterfaceRepository netInterfaceRepository, IDirectoryRepository directoryRepository,

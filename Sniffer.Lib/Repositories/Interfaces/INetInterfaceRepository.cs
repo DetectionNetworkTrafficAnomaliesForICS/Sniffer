@@ -5,7 +5,7 @@ namespace Sniffer.Lib.Repositories.Interfaces;
 
 public interface INetInterfaceRepository
 {
-    INetDevice? Get(NetConfiguration config);
+    bool TryGet(NetConfiguration config, out INetDevice? result, INetDevice? defaultValue = default);
     List<INetDevice> GetAll();
-    NetConfiguration GetDefault();
+    bool TryGetDefault(out INetDevice? result);
 }

@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Sniffer.Lib.Configuration;
+﻿namespace Sniffer.Lib.Configuration;
 
 public class FolderConfiguration
 {

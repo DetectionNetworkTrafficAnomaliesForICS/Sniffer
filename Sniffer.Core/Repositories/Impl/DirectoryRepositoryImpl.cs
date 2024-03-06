@@ -4,16 +4,28 @@ using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 
 namespace Sniffer.Core.Repositories.Impl;
+
 public class DirectoryRepositoryImpl : IDirectoryRepository
 {
-    public FolderConfiguration GetDefaultFolder()
+    public bool TryGetByConfiguration(FolderConfiguration configuration, out IFolder? result,
+        IFolder? defaultValue = default)
     {
-        var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        return new FolderConfiguration(currentDirectory);
+        try
+        {
+            result = new SystemFolder(configuration.Path);
+            return true;
+        }
+        catch (Exception)
+        {
+            result = defaultValue;
+            return false;
+        }
     }
 
-    public IFolder GetByConfiguration(FolderConfiguration configuration)
+    public bool TryGetDefaultFolder(out IFolder? result)
     {
-        return new SystemFolder(configuration.Path);
+        var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        result = new SystemFolder(currentDirectory);
+        return true;
     }
 }
