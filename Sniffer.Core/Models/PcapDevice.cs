@@ -1,4 +1,5 @@
 ﻿using SharpPcap;
+using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
@@ -7,13 +8,13 @@ public class PcapDevice : INetDevice
 {
     private readonly ICaptureDevice _captureDevice;
 
+    public NetConfiguration NetConfiguration { get; }
     public event INetDevice.PacketEventHandler? OnPacketArrival;
-
-    public string Name => _captureDevice.Name;
 
     public PcapDevice(ICaptureDevice captureDevice)
     {
         _captureDevice = captureDevice;
+        NetConfiguration = new NetConfiguration(captureDevice.Name);
     }
 
     private void PacketEventHandler(object sender, PacketCapture packetCapture)

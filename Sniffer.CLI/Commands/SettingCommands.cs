@@ -97,7 +97,7 @@ public class SettingCommands
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine(_settingsService.TrafficFolder);
+                    Console.WriteLine(_settingsService.TrafficFolder?.FolderConfiguration);
                     break;
                 case "2":
                     Console.Write("Enter path: ");

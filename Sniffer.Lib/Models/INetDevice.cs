@@ -1,11 +1,12 @@
-﻿
+﻿using Sniffer.Lib.Configuration;
+
 namespace Sniffer.Lib.Models;
 
 public interface INetDevice : IDisposable
 {
-    public string Name { get; }
-    public  event PacketEventHandler OnPacketArrival;
-    public  void Open();
+    public NetConfiguration NetConfiguration { get; }
+    public event PacketEventHandler OnPacketArrival;
+    public void Open();
     public void Start();
     public void Close();
 

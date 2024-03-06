@@ -15,7 +15,7 @@ public class SnifferCommands
 
     public void Run()
     {
-        var packets =_snifferService.CapturePackets(_settingsService.NetDevice);
+        var packets = _snifferService.CapturePackets(_settingsService.NetDevice);
         packets.ForEach(packet => Console.WriteLine($"{packet.SourceDevice}->{packet.DestinationDevice}"));
     }
 }

@@ -1,9 +1,11 @@
-﻿using Sniffer.Lib.Models;
+﻿using Sniffer.Lib.Configuration;
+using Sniffer.Lib.Models;
 
 namespace Sniffer.Lib.Repositories.Interfaces;
 
 public interface INetInterfaceRepository
 {
+    INetDevice? Get(NetConfiguration config);
     List<INetDevice> GetAll();
-    INetDevice GetDefault();
+    NetConfiguration GetDefault();
 }

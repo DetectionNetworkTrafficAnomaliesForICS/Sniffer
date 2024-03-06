@@ -1,4 +1,4 @@
-﻿namespace Sniffer.Core.Repositories;
+﻿namespace Sniffer.Lib.Repositories.Interfaces;
 
 public interface IPreferenceRepository
 {

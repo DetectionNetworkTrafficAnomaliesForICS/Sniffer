@@ -10,6 +10,6 @@ public interface INetPacket
     public uint AcknowledgementNumber { get; }
     public uint CheckSum { get; }
     public byte[] Data { get; }
-    
+
     public record Device(uint Port, string MacAddress, string IpAddress);
 }
