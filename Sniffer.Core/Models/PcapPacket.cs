@@ -16,10 +16,10 @@ public class PcapPacket : INetPacket
         var ipPacket = packet.Extract<IPPacket>();
         var tcpPacket = packet.Extract<TcpPacket>();
 
-        SourceDevice = new INetPacket.Device(tcpPacket.SourcePort, ethernetPacket.SourceHardwareAddress.ToString(),
-            ipPacket.SourceAddress.ToString());
-        DestinationDevice = new INetPacket.Device(tcpPacket.DestinationPort, ipPacket.DestinationAddress.ToString(),
-            ethernetPacket.DestinationHardwareAddress.ToString());
+        SourceDevice = new INetPacket.Device(tcpPacket.SourcePort, 
+            ipPacket.SourceAddress.ToString(),ethernetPacket.SourceHardwareAddress.ToString());
+        DestinationDevice = new INetPacket.Device(tcpPacket.DestinationPort, 
+            ethernetPacket.DestinationHardwareAddress.ToString(), ipPacket.DestinationAddress.ToString());
         
         Ttl = (uint)ipPacket.TimeToLive;
         AcknowledgementNumber = tcpPacket.AcknowledgmentNumber;
