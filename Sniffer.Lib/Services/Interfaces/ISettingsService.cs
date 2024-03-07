@@ -6,5 +6,5 @@ namespace Sniffer.Lib.Services.Interfaces;
 public interface ISettingsService : INotifyPropertyChanged
 {
     public IFolder? TrafficFolder { get; set; }
-    public INetDevice? NetDevice { get; set; }
+    public INetCaptureDevice? NetDevice { get; set; }
 }

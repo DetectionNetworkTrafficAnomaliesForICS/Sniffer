@@ -15,15 +15,24 @@ public class SnifferCommands
 
     public void Run()
     {
-        if (_settingsService.NetDevice!=null)
+        if (_settingsService.NetDevice != null)
         {
-            var packets = _snifferService.CapturePackets(_settingsService.NetDevice);
+            var cancelToken = new CancellationTokenSource();
+            
+            var taskCapture = _snifferService.CapturePacketsAsync(_settingsService.NetDevice, cancelToken.Token);
+
+            Console.WriteLine("Press `Enter` to finish");
+            Console.ReadLine();
+            
+            cancelToken.Cancel();
+            
+            var packets =  taskCapture.Result;
             packets.ForEach(packet => Console.WriteLine($"{packet.SourceDevice}->{packet.DestinationDevice}"));
+            
         }
         else
         {
             Console.WriteLine("Net Device not selected!");
         }
-        
     }
 }

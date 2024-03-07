@@ -4,5 +4,8 @@ namespace Sniffer.Lib.Services.Interfaces;
 
 public interface ISnifferService
 {
-    public List<INetPacket> CapturePackets(INetDevice netDevice);
+    public int RecheckingTime { get; }
+
+    public Task<List<INetPacket>> CapturePacketsAsync(INetCapture netDeviceCapture,
+        CancellationToken cancellationToken);
 }

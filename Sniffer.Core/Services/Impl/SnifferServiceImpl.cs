@@ -1,29 +1,32 @@
 ﻿using Sniffer.Lib.Models;
 using Sniffer.Lib.Services.Interfaces;
 
-
 namespace Sniffer.Core.Services.Impl;
 
 public class SnifferServiceImpl : ISnifferService
 {
-    public List<INetPacket> CapturePackets(INetDevice netDevice)
+    
+    public int RecheckingTime { get; }
+    
+    public SnifferServiceImpl(int recheckingTime)
+    {
+        RecheckingTime = recheckingTime;
+    }
+
+    public async Task<List<INetPacket>> CapturePacketsAsync(INetCapture netDeviceCapture,
+        CancellationToken cancellationToken)
     {
         var packets = new List<INetPacket>();
-
-        using var device = netDevice;
-
-        device.Open();
-
-        device.OnPacketArrival += (_, packet) =>
-        {
-            packets.Add(packet);
-        };
         
-        device.Start();
-        Console.ReadLine();
+        netDeviceCapture.Start(delegate(INetPacket netPacket) { packets.Add(netPacket); });
+
+        while (!cancellationToken.IsCancellationRequested)
+        {   
+            await Task.Delay(RecheckingTime);
+        }
+
+        netDeviceCapture.Stop();
 
         return packets;
     }
-
- 
 }
