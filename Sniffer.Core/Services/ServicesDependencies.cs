@@ -9,7 +9,7 @@ public static class ServicesDependencies
     public static void RegisterServicesDependencies(this IServiceCollection services)
     {
         services.AddSingleton<ISettingsService,SettingsServiceImpl>();
-        services.AddSingleton<ISnifferService>(new SnifferServiceImpl(12));
+        services.AddSingleton<ISnifferService,SnifferServiceImpl>();
         // services.AddSingleton<IDirectoryService,DirectoryServiceImpl>();
         services.AddSingleton<INetService,NetInterfaceServiceImpl>();
     }

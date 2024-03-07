@@ -1,4 +1,6 @@
-﻿using Sniffer.Lib.Models;
+﻿using Microsoft.Extensions.Options;
+using Sniffer.Core.Configuration;
+using Sniffer.Lib.Models;
 using Sniffer.Lib.Services.Interfaces;
 
 namespace Sniffer.Core.Services.Impl;
@@ -6,11 +8,12 @@ namespace Sniffer.Core.Services.Impl;
 public class SnifferServiceImpl : ISnifferService
 {
     
-    public int RecheckingTime { get; }
+    private readonly IOptions<AppConfiguration> _appConfig;
+        
     
-    public SnifferServiceImpl(int recheckingTime)
+    public SnifferServiceImpl(IOptions<AppConfiguration> appConfig)
     {
-        RecheckingTime = recheckingTime;
+        _appConfig = appConfig;
     }
 
     public async Task<List<INetPacket>> CapturePacketsAsync(INetCapture netDeviceCapture,
@@ -22,7 +25,7 @@ public class SnifferServiceImpl : ISnifferService
 
         while (!cancellationToken.IsCancellationRequested)
         {   
-            await Task.Delay(RecheckingTime);
+            await Task.Delay(_appConfig.Value.RecheckingCancelTime);
         }
 
         netDeviceCapture.Stop();
