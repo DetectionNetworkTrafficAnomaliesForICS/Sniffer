@@ -1,4 +1,5 @@
-﻿using Sniffer.Core.Models;
+﻿using System;
+using Sniffer.Core.Models;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Services.Interfaces;
 

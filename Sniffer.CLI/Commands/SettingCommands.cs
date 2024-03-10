@@ -1,7 +1,9 @@
-﻿using Sniffer.Core.Models;
+﻿using System;
+using Sniffer.Core.Models;
 using Sniffer.Lib.Services.Interfaces;
 
 namespace Sniffer.CLI.Commands;
+
 
 public class SettingCommands
 {

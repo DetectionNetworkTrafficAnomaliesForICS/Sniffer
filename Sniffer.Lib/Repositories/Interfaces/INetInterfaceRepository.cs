@@ -1,4 +1,5 @@
-﻿using Sniffer.Lib.Configuration;
+﻿using System.Collections.Generic;
+using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Lib.Repositories.Interfaces;

@@ -1,16 +1,17 @@
-﻿namespace Sniffer.Lib.Configuration;
-
-public class NetConfiguration
+﻿namespace Sniffer.Lib.Configuration
 {
-    public string Name { get; }
-    
-    public NetConfiguration(string name)
+    public class NetConfiguration
     {
-        Name = name;
-    }
+        public string Name { get; }
 
-    public override string ToString()
-    {
-        return Name;
+        public NetConfiguration(string name)
+        {
+            Name = name;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

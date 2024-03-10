@@ -2,5 +2,5 @@
 
 public class AppConfiguration
 {
-    public int RecheckingCancelTime { get; init; }
+    public int RecheckingCancelTime { get; set; }
 }

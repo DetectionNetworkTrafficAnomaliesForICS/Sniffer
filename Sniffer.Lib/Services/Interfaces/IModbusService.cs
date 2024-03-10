@@ -1,5 +1,4 @@
-﻿using Sniffer.Lib.Configuration;
-using Sniffer.Lib.Models;
+﻿using Sniffer.Lib.Models;
 
 namespace Sniffer.Lib.Services.Interfaces;
 

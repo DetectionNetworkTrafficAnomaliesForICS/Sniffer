@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using Sniffer.Lib.Repositories.Interfaces;
 
 namespace Sniffer.Core.Repositories.Impl;

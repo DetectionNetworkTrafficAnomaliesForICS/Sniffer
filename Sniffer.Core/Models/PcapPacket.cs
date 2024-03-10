@@ -1,31 +1,27 @@
-﻿using PacketDotNet;
-using SharpPcap;
+﻿using System.Linq;
+using PcapDotNet.Packets;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
 public class PcapPacket : INetPacket
 {
-    public PcapPacket(PacketCapture packetCapture)
+    public PcapPacket(Packet packetCapture)
     {
-        var rawPacket = packetCapture.GetPacket();
-
-        var packet = Packet.ParsePacket(rawPacket.LinkLayerType, rawPacket.Data);
-
-        var ethernetPacket = packet.Extract<EthernetPacket>();
-        var ipPacket = packet.Extract<IPPacket>();
-        var tcpPacket = packet.Extract<TcpPacket>();
+        var ethernetPacket = packetCapture.Ethernet;
+        var ipPacket = ethernetPacket.IpV4;
+        var tcpPacket = ipPacket.Tcp;
 
         SourceDevice = new INetPacket.Device(tcpPacket.SourcePort, 
-            ipPacket.SourceAddress.ToString(),ethernetPacket.SourceHardwareAddress.ToString());
+            ipPacket.Source.ToString(),ethernetPacket.Source.ToString());
         DestinationDevice = new INetPacket.Device(tcpPacket.DestinationPort, 
-            ethernetPacket.DestinationHardwareAddress.ToString(), ipPacket.DestinationAddress.ToString());
+            ethernetPacket.Destination.ToString(), ipPacket.Destination.ToString());
         
-        Ttl = (uint)ipPacket.TimeToLive;
+        Ttl = ipPacket.Ttl;
         AcknowledgementNumber = tcpPacket.AcknowledgmentNumber;
         SequenceNumber = tcpPacket.SequenceNumber;
         CheckSum = tcpPacket.Checksum;
-        Data = tcpPacket.PayloadData;
+        Data = tcpPacket.Payload.ToArray();
     }
 
     public INetPacket.Device SourceDevice { get; }

@@ -11,5 +11,19 @@ public interface INetPacket
     public uint CheckSum { get; }
     public byte[] Data { get; }
 
-    public record Device(uint Port, string MacAddress, string IpAddress);
+    public class Device
+    {
+        
+        public uint Port { get; }
+        public string MacAddress { get; }
+        public string IpAddress { get; }
+        
+        public Device(uint port, string macAddress, string ipAddress)
+        {
+            Port = port;
+            MacAddress = macAddress;
+            IpAddress = ipAddress;
+        }
+    }
+ 
 }

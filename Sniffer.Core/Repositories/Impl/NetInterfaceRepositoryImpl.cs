@@ -1,4 +1,7 @@
-﻿using SharpPcap;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using PcapDotNet.Core;
 using Sniffer.Core.Models;
 using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
@@ -12,21 +15,29 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
     {
         try
         {
-            var allDevices = CaptureDeviceList.Instance;
-
-            result = new PcapCaptureDevice(allDevices[config.Name]);
-            return true;
+            var allDevices = LivePacketDevice.AllLocalMachine;
+            foreach (var device in allDevices)
+            {
+                if (device.Name.Equals(config.Name))
+                {
+                    result = new PcapCaptureDevice(device);
+                    return true;
+                }
+            }
         }
         catch (Exception)
         {
             result = defaultValue;
             return false;
         }
+
+        result = defaultValue;
+        return false;
     }
 
     public List<INetCaptureDevice> GetAll()
     {
-        var allDevices = CaptureDeviceList.Instance;
+        var allDevices = LivePacketDevice.AllLocalMachine;
         return allDevices != null
             ? allDevices.Select(device => new PcapCaptureDevice(device)).ToList<INetCaptureDevice>()
             : new List<INetCaptureDevice>();
@@ -34,7 +45,7 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
 
     public bool TryGetDefault(out INetCaptureDevice? result)
     {
-        var allDevices = CaptureDeviceList.Instance;
+        var allDevices = LivePacketDevice.AllLocalMachine;
 
         try
         {

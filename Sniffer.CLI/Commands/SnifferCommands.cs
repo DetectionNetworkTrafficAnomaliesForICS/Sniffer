@@ -1,4 +1,6 @@
-﻿using Sniffer.Lib.Services.Interfaces;
+﻿using System;
+using System.Threading;
+using Sniffer.Lib.Services.Interfaces;
 
 namespace Sniffer.CLI.Commands;
 

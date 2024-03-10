@@ -2,6 +2,7 @@
 
 namespace Sniffer.Core.Models;
 
+
 public class ModbusPacket : IModbusPacket
 {
     public ModbusPacket(ushort transactionId, ushort protocolId, ushort lenRemainingPackage, byte deviceId, byte[] pdu)
