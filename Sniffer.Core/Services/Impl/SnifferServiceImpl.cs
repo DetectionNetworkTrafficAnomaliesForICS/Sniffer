@@ -7,9 +7,7 @@ namespace Sniffer.Core.Services.Impl;
 
 public class SnifferServiceImpl : ISnifferService
 {
-    
     private readonly IOptions<AppConfiguration> _appConfig;
-        
     
     public SnifferServiceImpl(IOptions<AppConfiguration> appConfig)
     {
