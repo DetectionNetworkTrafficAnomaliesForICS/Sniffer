@@ -1,9 +1,12 @@
-﻿using Sniffer.Lib.Models;
+﻿using System;
+using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
 public class CsvPacket
 {
+    public DateTime DateTime { get; }
+
     public uint SourcePort { get; }
     public string SourceMacAddress { get; }
     public string SourceIpAddress { get; }
@@ -35,5 +38,6 @@ public class CsvPacket
         CheckSum = netPacket.CheckSum;
 
         Packet = modbus;
+        DateTime = netPacket.DateTime;
     }
 }

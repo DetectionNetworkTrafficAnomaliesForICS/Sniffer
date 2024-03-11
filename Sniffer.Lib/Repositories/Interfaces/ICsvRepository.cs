@@ -5,5 +5,5 @@ namespace Sniffer.Lib.Repositories.Interfaces;
 
 public interface ICsvRepository
 {
-    bool TryWriteCsvFile<T>(IFile file, List<T> list);
+    bool TryWriteCsvFile<T>(IFile file, IEnumerable<T> list);
 }

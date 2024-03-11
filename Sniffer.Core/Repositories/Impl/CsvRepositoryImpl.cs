@@ -10,7 +10,7 @@ namespace Sniffer.Core.Repositories.Impl;
 
 public class CsvRepositoryImpl : ICsvRepository
 {
-    public bool TryWriteCsvFile<T>(IFile file, List<T> list)
+    public bool TryWriteCsvFile<T>(IFile file, IEnumerable<T> list)
     {
         try
         {

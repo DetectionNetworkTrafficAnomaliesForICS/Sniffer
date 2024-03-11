@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using PcapDotNet.Packets;
 using Sniffer.Lib.Models;
 
@@ -8,6 +9,7 @@ public class PcapPacket : INetPacket
 {
     public PcapPacket(Packet packetCapture)
     {
+        DateTime = DateTime.Now;
         var ethernetPacket = packetCapture.Ethernet;
         var ipPacket = ethernetPacket.IpV4;
         var tcpPacket = ipPacket.Tcp;
@@ -24,6 +26,7 @@ public class PcapPacket : INetPacket
         Data = tcpPacket.Payload.ToArray();
     }
 
+    public DateTime DateTime { get; }
     public INetPacket.Device SourceDevice { get; }
     public INetPacket.Device DestinationDevice { get; }
     

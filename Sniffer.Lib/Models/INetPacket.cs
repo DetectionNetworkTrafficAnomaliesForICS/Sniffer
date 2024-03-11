@@ -1,7 +1,10 @@
-﻿namespace Sniffer.Lib.Models;
+﻿using System;
+
+namespace Sniffer.Lib.Models;
 
 public interface INetPacket
 {
+    public DateTime DateTime { get; }
     public Device SourceDevice { get; }
     public Device DestinationDevice { get; }
 
