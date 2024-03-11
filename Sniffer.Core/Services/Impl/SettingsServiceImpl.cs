@@ -18,15 +18,19 @@ public class SettingsServiceImpl : ISettingsService
     {
         get
         {
-            _preferenceRepository.TryGet<FolderConfiguration>(nameof(TrafficFolder), out var config);
-            if (config != null)
+            if (_preferenceRepository.TryGet<FolderConfiguration>(nameof(TrafficFolder), out var config))
             {
-                _folderRepository.TryGetByConfiguration(config, out var folder);
+                _folderRepository.TryGetByConfiguration(config!, out var folder);
                 return folder;
             }
 
-            _folderRepository.TryGetDefaultFolder(out var folderDefault);
-            return folderDefault;
+            if (_appConfig.Value.DefaultFolder != null)
+            {
+                _folderRepository.TryGetByConfiguration(_appConfig.Value.DefaultFolder, out var folderDefault);
+                return folderDefault;
+            }
+
+            return default;
         }
         set
         {

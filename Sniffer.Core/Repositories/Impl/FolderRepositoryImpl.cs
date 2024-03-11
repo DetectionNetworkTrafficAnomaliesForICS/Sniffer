@@ -23,13 +23,6 @@ public class FolderRepositoryImpl : IFolderRepository
         }
     }
 
-    public bool TryGetDefaultFolder(out IFolder? result)
-    {
-        var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        result = new SystemFolder(currentDirectory);
-        return true;
-    }
-
     public bool TryCreateFile(IFolder folder, string name, out IFile? file)
     {
         try
