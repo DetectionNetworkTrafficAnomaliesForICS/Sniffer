@@ -14,7 +14,7 @@ public class NetInterfaceServiceImpl : INetService
         _interfaceRepository = interfaceRepository;
     }
 
-    public List<INetCaptureDevice> GetAll()
+    public List<INetDevice> GetAll()
     {
         return _interfaceRepository.GetAll();
     }

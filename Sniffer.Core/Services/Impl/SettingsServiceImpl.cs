@@ -39,7 +39,7 @@ public class SettingsServiceImpl : ISettingsService
         }
     }
 
-    public INetCaptureDevice? NetDevice
+    public INetDevice? NetDevice
     {
         get
         {

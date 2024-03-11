@@ -11,7 +11,7 @@ namespace Sniffer.Core.Repositories.Impl;
 
 public class NetInterfaceRepositoryImpl : INetInterfaceRepository
 {
-    public bool TryGet(NetConfiguration config, out INetCaptureDevice? result, INetCaptureDevice? defaultValue = default)
+    public bool TryGet(NetConfiguration config, out INetDevice? result, INetDevice? defaultValue = default)
     {
         try
         {
@@ -20,7 +20,7 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
             {
                 if (device.Name.Equals(config.Name))
                 {
-                    result = new PcapCaptureDevice(device);
+                    result = new PcapDevice(device);
                     return true;
                 }
             }
@@ -35,12 +35,12 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
         return false;
     }
 
-    public List<INetCaptureDevice> GetAll()
+    public List<INetDevice> GetAll()
     {
         var allDevices = LivePacketDevice.AllLocalMachine;
         return allDevices != null
-            ? allDevices.Select(device => new PcapCaptureDevice(device)).ToList<INetCaptureDevice>()
-            : new List<INetCaptureDevice>();
+            ? allDevices.Select(device => new PcapDevice(device)).ToList<INetDevice>()
+            : new List<INetDevice>();
     }
     
 }

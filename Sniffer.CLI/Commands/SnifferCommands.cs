@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Sniffer.Lib.Services.Interfaces;
 
 namespace Sniffer.CLI.Commands;
@@ -23,7 +24,8 @@ public class SnifferCommands
         {
             var cancelToken = new CancellationTokenSource();
 
-            var taskCapture = _snifferService.CapturePacketsAsync(_settingsService.NetDevice, cancelToken.Token);
+             
+            var taskCapture = _snifferService.CapturePacketsAsync(_settingsService.NetDevice,cancelToken.Token);
 
             Console.WriteLine("Press `Enter` to finish");
             Console.ReadLine();
@@ -36,7 +38,7 @@ public class SnifferCommands
             Console.WriteLine("Write a name to save");
 
             var name = Console.ReadLine();
-            if (name != null) _csvService.WriteCsv(name, packets);
+            if (name != null) _csvService.WriteModbusPackets(name, packets);
         }
         else
         {

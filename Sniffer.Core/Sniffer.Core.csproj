@@ -100,8 +100,10 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Configuration\AppConfiguration.cs" />
+        <Compile Include="Models\CsvPacket.cs" />
         <Compile Include="Models\ModbusPacket.cs" />
-        <Compile Include="Models\PcapCaptureDevice.cs" />
+        <Compile Include="Models\PcapDevice.cs" />
+        <Compile Include="Models\PcapNetCatcher.cs" />
         <Compile Include="Models\PcapPacket.cs" />
         <Compile Include="Models\SystemFile.cs" />
         <Compile Include="Models\SystemFolder.cs" />

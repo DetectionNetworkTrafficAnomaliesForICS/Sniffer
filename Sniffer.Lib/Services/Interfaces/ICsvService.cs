@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Sniffer.Lib.Models;
 
 namespace Sniffer.Lib.Services.Interfaces;
 
 public interface ICsvService
 {
-    public void WriteCsv<T>(string name, List<T> list);
+    public void WriteModbusPackets(string name, List<INetPacket> list);
 }

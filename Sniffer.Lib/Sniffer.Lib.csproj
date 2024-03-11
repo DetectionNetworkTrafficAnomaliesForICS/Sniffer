@@ -46,8 +46,8 @@
         <Compile Include="Models\IFile.cs" />
         <Compile Include="Models\IFolder.cs" />
         <Compile Include="Models\IModbusPacket.cs" />
-        <Compile Include="Models\INetCapture.cs" />
-        <Compile Include="Models\INetCaptureDevice.cs" />
+        <Compile Include="Models\INetCatcher.cs" />
+        <Compile Include="Models\INetDevice.cs" />
         <Compile Include="Models\INetPacket.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="Repositories\Interfaces\ICsvRepository.cs" />
