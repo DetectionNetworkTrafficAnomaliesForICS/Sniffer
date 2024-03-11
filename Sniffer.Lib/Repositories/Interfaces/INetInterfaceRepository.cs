@@ -8,5 +8,4 @@ public interface INetInterfaceRepository
 {
     bool TryGet(NetConfiguration config, out INetCaptureDevice? result, INetCaptureDevice? defaultValue = default);
     List<INetCaptureDevice> GetAll();
-    bool TryGetDefault(out INetCaptureDevice? result);
 }

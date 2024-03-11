@@ -42,20 +42,5 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
             ? allDevices.Select(device => new PcapCaptureDevice(device)).ToList<INetCaptureDevice>()
             : new List<INetCaptureDevice>();
     }
-
-    public bool TryGetDefault(out INetCaptureDevice? result)
-    {
-        var allDevices = LivePacketDevice.AllLocalMachine;
-
-        try
-        {
-            result = new PcapCaptureDevice(allDevices[0]);
-            return true;
-        }
-        catch (Exception)
-        {
-            result = null;
-            return false;
-        }
-    }
+    
 }

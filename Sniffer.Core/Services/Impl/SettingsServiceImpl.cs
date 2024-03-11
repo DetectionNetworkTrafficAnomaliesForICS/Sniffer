@@ -1,4 +1,6 @@
-﻿using Sniffer.Lib.Configuration;
+﻿using Microsoft.Extensions.Options;
+using Sniffer.Core.Configuration;
+using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 using Sniffer.Lib.Services.Interfaces;
@@ -10,6 +12,7 @@ public class SettingsServiceImpl : ISettingsService
     private readonly INetInterfaceRepository _netInterfaceRepository;
     private readonly IFolderRepository _folderRepository;
     private readonly IPreferenceRepository _preferenceRepository;
+    private readonly IOptions<AppConfiguration> _appConfig;
 
     public IFolder? TrafficFolder
     {
@@ -36,15 +39,19 @@ public class SettingsServiceImpl : ISettingsService
     {
         get
         {
-            _preferenceRepository.TryGet<NetConfiguration>(nameof(NetDevice), out var config);
-            if (config != null)
+            if (_preferenceRepository.TryGet<NetConfiguration>(nameof(NetDevice), out var config))
             {
-                _netInterfaceRepository.TryGet(config, out var device);
+                _netInterfaceRepository.TryGet(config!, out var device);
                 return device;
             }
 
-            _netInterfaceRepository.TryGetDefault(out var deviceDefault);
-            return deviceDefault;
+            if (_appConfig.Value.DefaultNetDevice != null)
+            {
+                _netInterfaceRepository.TryGet(_appConfig.Value.DefaultNetDevice, out var deviceDefault);
+                return deviceDefault;
+            }
+
+            return default;
         }
         set
         {
@@ -54,10 +61,11 @@ public class SettingsServiceImpl : ISettingsService
     }
 
     public SettingsServiceImpl(INetInterfaceRepository netInterfaceRepository, IFolderRepository folderRepository,
-        IPreferenceRepository preferenceRepository)
+        IPreferenceRepository preferenceRepository, IOptions<AppConfiguration> appConfig)
     {
         _netInterfaceRepository = netInterfaceRepository;
         _folderRepository = folderRepository;
         _preferenceRepository = preferenceRepository;
+        _appConfig = appConfig;
     }
 }
