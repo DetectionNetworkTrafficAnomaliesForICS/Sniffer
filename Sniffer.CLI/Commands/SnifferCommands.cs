@@ -8,11 +8,13 @@ public class SnifferCommands
 {
     private readonly ISnifferService _snifferService;
     private readonly ISettingsService _settingsService;
+    private readonly ICsvService _csvService;
 
-    public SnifferCommands(ISnifferService snifferService, ISettingsService settingsService)
+    public SnifferCommands(ISnifferService snifferService, ISettingsService settingsService, ICsvService csvService)
     {
         _snifferService = snifferService;
         _settingsService = settingsService;
+        _csvService = csvService;
     }
 
     public void Run()
@@ -20,17 +22,21 @@ public class SnifferCommands
         if (_settingsService.NetDevice != null)
         {
             var cancelToken = new CancellationTokenSource();
-            
+
             var taskCapture = _snifferService.CapturePacketsAsync(_settingsService.NetDevice, cancelToken.Token);
 
             Console.WriteLine("Press `Enter` to finish");
             Console.ReadLine();
-            
+
             cancelToken.Cancel();
-            
-            var packets =  taskCapture.Result;
-            packets.ForEach(packet => Console.WriteLine($"{packet.SourceDevice}->{packet.DestinationDevice}"));
-            
+
+            var packets = taskCapture.Result;
+
+            Console.WriteLine($"{packets.Count} files intercepted");
+            Console.WriteLine("Write a name to save");
+
+            var name = Console.ReadLine();
+            if (name != null) _csvService.WriteCsv(name, packets);
         }
         else
         {

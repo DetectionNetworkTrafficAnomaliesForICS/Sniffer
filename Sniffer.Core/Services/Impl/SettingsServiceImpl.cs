@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Sniffer.Lib.Configuration;
+﻿using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 using Sniffer.Lib.Services.Interfaces;
@@ -9,10 +8,8 @@ namespace Sniffer.Core.Services.Impl;
 public class SettingsServiceImpl : ISettingsService
 {
     private readonly INetInterfaceRepository _netInterfaceRepository;
-    private readonly IDirectoryRepository _directoryRepository;
+    private readonly IFolderRepository _folderRepository;
     private readonly IPreferenceRepository _preferenceRepository;
-
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     public IFolder? TrafficFolder
     {
@@ -21,11 +18,11 @@ public class SettingsServiceImpl : ISettingsService
             _preferenceRepository.TryGet<FolderConfiguration>(nameof(TrafficFolder), out var config);
             if (config != null)
             {
-                _directoryRepository.TryGetByConfiguration(config, out var folder);
+                _folderRepository.TryGetByConfiguration(config, out var folder);
                 return folder;
             }
 
-            _directoryRepository.TryGetDefaultFolder(out var folderDefault);
+            _folderRepository.TryGetDefaultFolder(out var folderDefault);
             return folderDefault;
         }
         set
@@ -56,11 +53,11 @@ public class SettingsServiceImpl : ISettingsService
         }
     }
 
-    public SettingsServiceImpl(INetInterfaceRepository netInterfaceRepository, IDirectoryRepository directoryRepository,
+    public SettingsServiceImpl(INetInterfaceRepository netInterfaceRepository, IFolderRepository folderRepository,
         IPreferenceRepository preferenceRepository)
     {
         _netInterfaceRepository = netInterfaceRepository;
-        _directoryRepository = directoryRepository;
+        _folderRepository = folderRepository;
         _preferenceRepository = preferenceRepository;
     }
 }

@@ -6,7 +6,7 @@ using Sniffer.Lib.Repositories.Interfaces;
 
 namespace Sniffer.Core.Repositories.Impl;
 
-public class DirectoryRepositoryImpl : IDirectoryRepository
+public class FolderRepositoryImpl : IFolderRepository
 {
     public bool TryGetByConfiguration(FolderConfiguration configuration, out IFolder? result,
         IFolder? defaultValue = default)
@@ -28,5 +28,19 @@ public class DirectoryRepositoryImpl : IDirectoryRepository
         var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
         result = new SystemFolder(currentDirectory);
         return true;
+    }
+
+    public bool TryCreateFile(IFolder folder, string name, out IFile? file)
+    {
+        try
+        {
+            file = new SystemFile(folder.FolderConfiguration.Path + name);
+            return true;
+        }
+        catch (Exception)
+        {
+            file = default;
+            return false;
+        }
     }
 }
