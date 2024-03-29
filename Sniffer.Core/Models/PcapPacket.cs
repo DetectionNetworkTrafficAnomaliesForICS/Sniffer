@@ -33,7 +33,7 @@ public class PcapPacket : INetPacket
     public uint Ttl { get; }
     public uint SequenceNumber { get; }
     public uint AcknowledgementNumber { get; }
-    public uint CheckSum { get; }
+    public ushort CheckSum { get; }
     
     public byte[] Data { get; }
 }

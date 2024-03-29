@@ -4,5 +4,5 @@ namespace Sniffer.Lib.Services.Interfaces;
 
 public interface IModbusService
 {
-    public bool TryConvertToModbusPacket(INetPacket netPacket, out IModbusPacket? result);
+    bool TryConvertToModbusPacket(INetPacket netPacket, out IModbusPacket? result);
 }

@@ -5,7 +5,7 @@ namespace Sniffer.Lib.Models;
 
 public interface INetDevice
 {
-    public NetConfiguration NetConfiguration { get; }
-    public INetCatcher Open(int timeout);
-    public void Close();
+    NetConfiguration NetConfiguration { get; }
+    INetCatcher Open(int timeout);
+    void Close();
 }

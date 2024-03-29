@@ -5,5 +5,5 @@ namespace Sniffer.Lib.Services.Interfaces;
 
 public interface ICsvService
 {
-    public void WriteModbusPackets(string name, List<INetPacket> list);
+    void WriteModbusPackets(string name, List<INetPacket> list);
 }

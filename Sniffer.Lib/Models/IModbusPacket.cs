@@ -2,9 +2,9 @@
 
 public interface IModbusPacket
 {
-    public ushort TransactionId { get; }
-    public ushort ProtocolId { get; }
-    public ushort LenRemainingPackage { get; }
-    public byte DeviceId { get; }
-    public byte[] Pdu { get; }
+    ushort TransactionId { get; }
+    ushort ProtocolId { get; }
+    ushort LenRemainingPackage { get; }
+    byte DeviceId { get; }
+    byte[] Pdu { get; }
 }

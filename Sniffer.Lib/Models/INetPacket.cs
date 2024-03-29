@@ -4,23 +4,22 @@ namespace Sniffer.Lib.Models;
 
 public interface INetPacket
 {
-    public DateTime DateTime { get; }
-    public Device SourceDevice { get; }
-    public Device DestinationDevice { get; }
+    DateTime DateTime { get; }
+    Device SourceDevice { get; }
+    Device DestinationDevice { get; }
 
-    public uint Ttl { get; }
-    public uint SequenceNumber { get; }
-    public uint AcknowledgementNumber { get; }
-    public uint CheckSum { get; }
-    public byte[] Data { get; }
+    uint Ttl { get; }
+    uint SequenceNumber { get; }
+    uint AcknowledgementNumber { get; }
+    ushort CheckSum { get; }
+    byte[] Data { get; }
 
-    public class Device
+    class Device
     {
-        
         public uint Port { get; }
         public string MacAddress { get; }
         public string IpAddress { get; }
-        
+
         public Device(uint port, string macAddress, string ipAddress)
         {
             Port = port;
@@ -28,5 +27,4 @@ public interface INetPacket
             IpAddress = ipAddress;
         }
     }
- 
 }
