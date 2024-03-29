@@ -1,17 +1,16 @@
-﻿using System;
-using System.IO;
-using Sniffer.Lib.Configuration;
+﻿using System.IO;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
 public class SystemFolder : IFolder
 {
-    public FolderConfiguration FolderConfiguration { get; }
+    public string Path { get; }
+
 
     public SystemFolder(string path)
     {
-        FolderConfiguration = new FolderConfiguration(path);
+        Path = path;
 
         if (!Directory.Exists(path))
         {

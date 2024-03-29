@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System;
+using Microsoft.Extensions.Options;
 using Sniffer.Core.Configuration;
-using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 using Sniffer.Lib.Services.Interfaces;
@@ -18,15 +18,15 @@ public class SettingsServiceImpl : ISettingsService
     {
         get
         {
-            if (_preferenceRepository.TryGet<FolderConfiguration>(nameof(TrafficFolder), out var config))
+            if (_preferenceRepository.TryGet<string>(nameof(TrafficFolder), out var path))
             {
-                _folderRepository.TryGetByConfiguration(config!, out var folder);
+                _folderRepository.TryGetByPath(path!, out var folder);
                 return folder;
             }
 
             if (_appConfig.Value.DefaultFolder != null)
             {
-                _folderRepository.TryGetByConfiguration(_appConfig.Value.DefaultFolder, out var folderDefault);
+                _folderRepository.TryGetByPath(_appConfig.Value.DefaultFolder.Path, out var folderDefault);
                 return folderDefault;
             }
 
@@ -35,7 +35,7 @@ public class SettingsServiceImpl : ISettingsService
         set
         {
             if (value != null)
-                _preferenceRepository.TrySet(nameof(TrafficFolder), value.FolderConfiguration);
+                _preferenceRepository.TrySet(nameof(TrafficFolder), value.Path);
         }
     }
 
@@ -43,15 +43,15 @@ public class SettingsServiceImpl : ISettingsService
     {
         get
         {
-            if (_preferenceRepository.TryGet<NetConfiguration>(nameof(NetDevice), out var config))
+            if (_preferenceRepository.TryGet<string>(nameof(NetDevice), out var name))
             {
-                _netInterfaceRepository.TryGet(config!, out var device);
+                _netInterfaceRepository.TryGetByName(name!, out var device);
                 return device;
             }
 
             if (_appConfig.Value.DefaultNetDevice != null)
             {
-                _netInterfaceRepository.TryGet(_appConfig.Value.DefaultNetDevice, out var deviceDefault);
+                _netInterfaceRepository.TryGetByName(_appConfig.Value.DefaultNetDevice.Name, out var deviceDefault);
                 return deviceDefault;
             }
 
@@ -60,7 +60,7 @@ public class SettingsServiceImpl : ISettingsService
         set
         {
             if (value != null)
-                _preferenceRepository.TrySet(nameof(NetDevice), value.NetConfiguration);
+                _preferenceRepository.TrySet(nameof(NetDevice), value.Name);
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿using System;
+using Sniffer.Core.Configuration;
 using Sniffer.Core.Models;
-using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 
@@ -8,12 +8,11 @@ namespace Sniffer.Core.Repositories.Impl;
 
 public class FolderRepositoryImpl : IFolderRepository
 {
-    public bool TryGetByConfiguration(FolderConfiguration configuration, out IFolder? result,
-        IFolder? defaultValue = default)
+    public bool TryGetByPath(string path, out IFolder? result, IFolder? defaultValue = default)
     {
         try
         {
-            result = new SystemFolder(configuration.Path);
+            result = new SystemFolder(path);
             return true;
         }
         catch (Exception)
@@ -27,7 +26,7 @@ public class FolderRepositoryImpl : IFolderRepository
     {
         try
         {
-            file = new SystemFile(folder.FolderConfiguration.Path + name);
+            file = new SystemFile(folder.Path + name);
             return true;
         }
         catch (Exception)

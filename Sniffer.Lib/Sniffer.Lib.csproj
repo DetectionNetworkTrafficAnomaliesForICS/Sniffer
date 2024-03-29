@@ -41,8 +41,6 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Configuration\FolderConfiguration.cs" />
-        <Compile Include="Configuration\NetConfiguration.cs" />
         <Compile Include="Models\IFile.cs" />
         <Compile Include="Models\IFolder.cs" />
         <Compile Include="Models\IModbusPacket.cs" />
@@ -63,6 +61,9 @@
     </ItemGroup>
     <ItemGroup>
       <None Include=".gitignore" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Configuration\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

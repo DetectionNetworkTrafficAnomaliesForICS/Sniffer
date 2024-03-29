@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using PcapDotNet.Core;
+using Sniffer.Core.Configuration;
 using Sniffer.Core.Models;
-using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 
@@ -11,14 +11,14 @@ namespace Sniffer.Core.Repositories.Impl;
 
 public class NetInterfaceRepositoryImpl : INetInterfaceRepository
 {
-    public bool TryGet(NetConfiguration config, out INetDevice? result, INetDevice? defaultValue = default)
+    public bool TryGetByName(string name, out INetDevice? result, INetDevice? defaultValue = default)
     {
         try
         {
             var allDevices = LivePacketDevice.AllLocalMachine;
             foreach (var device in allDevices)
             {
-                if (device.Name.Equals(config.Name))
+                if (device.Name.Equals(name))
                 {
                     result = new PcapDevice(device);
                     return true;
@@ -42,5 +42,4 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
             ? allDevices.Select(device => new PcapDevice(device)).ToList<INetDevice>()
             : new List<INetDevice>();
     }
-    
 }

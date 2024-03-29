@@ -1,6 +1,4 @@
-﻿using Sniffer.Lib.Configuration;
-
-namespace Sniffer.Core.Configuration;
+﻿namespace Sniffer.Core.Configuration;
 
 public class AppConfiguration
 {

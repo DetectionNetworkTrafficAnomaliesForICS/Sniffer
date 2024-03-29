@@ -1,4 +1,4 @@
-﻿namespace Sniffer.Lib.Configuration;
+﻿namespace Sniffer.Core.Configuration;
 
 public class FolderConfiguration
 {

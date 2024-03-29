@@ -1,8 +1,8 @@
-﻿using Sniffer.Lib.Configuration;
+﻿using System;
 
 namespace Sniffer.Lib.Models;
 
 public interface IFolder
 {
-    FolderConfiguration FolderConfiguration { get; }
+    string Path { get; }
 }

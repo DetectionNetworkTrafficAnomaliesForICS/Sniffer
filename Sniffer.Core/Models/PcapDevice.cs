@@ -1,5 +1,4 @@
 ﻿using PcapDotNet.Core;
-using Sniffer.Lib.Configuration;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
@@ -8,13 +7,12 @@ public class PcapDevice : INetDevice
 {
     private readonly IPacketDevice _captureDevice;
 
-    public NetConfiguration NetConfiguration { get; }
+    public string Name { get; }
 
     public PcapDevice(IPacketDevice captureDevice)
     {
         _captureDevice = captureDevice;
-
-        NetConfiguration = new NetConfiguration(captureDevice.Name);
+        Name = captureDevice.Name;
     }
 
     public INetCatcher Open(int timeout)
@@ -24,9 +22,8 @@ public class PcapDevice : INetDevice
 
     public void Close()
     {
-        
     }
-    
+
     public override string ToString()
     {
         return _captureDevice.Description;
