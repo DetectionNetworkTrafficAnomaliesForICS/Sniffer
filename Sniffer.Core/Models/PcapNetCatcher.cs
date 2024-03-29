@@ -1,4 +1,5 @@
-﻿using PcapDotNet.Core;
+﻿using System;
+using PcapDotNet.Core;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
@@ -18,8 +19,16 @@ public class PcapNetCatcher : INetCatcher
         switch (result)
         {
             case PacketCommunicatorReceiveResult.Ok:
-                packet = new PcapPacket(p);
-                return INetCatcher.ReceiveResult.Ok;
+                try
+                {
+                    packet = new PcapPacket(p);
+                    return INetCatcher.ReceiveResult.Ok;
+                }
+                catch (Exception)
+                {
+                    packet = default;
+                    return INetCatcher.ReceiveResult.Error;
+                }
             case PacketCommunicatorReceiveResult.Timeout:
                 packet = default;
                 return INetCatcher.ReceiveResult.Timeout;

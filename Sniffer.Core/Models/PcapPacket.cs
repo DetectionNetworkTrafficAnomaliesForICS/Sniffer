@@ -14,6 +14,11 @@ public class PcapPacket : INetPacket
         var ipPacket = ethernetPacket.IpV4;
         var tcpPacket = ipPacket.Tcp;
 
+        if (!tcpPacket.IsValid || !ethernetPacket.IsValid || !ipPacket.IsValid)
+        {
+            throw new Exception("Not valid packet!");
+        }
+
         SourceDevice = new INetPacket.Device(tcpPacket.SourcePort, 
             ipPacket.Source.ToString(),ethernetPacket.Source.ToString());
         DestinationDevice = new INetPacket.Device(tcpPacket.DestinationPort, 
