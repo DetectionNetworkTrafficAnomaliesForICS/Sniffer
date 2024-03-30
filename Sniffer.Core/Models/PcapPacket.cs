@@ -13,14 +13,14 @@ public class PcapPacket : INetPacket
         var ethernetPacket = packetCapture.Ethernet;
         var ipPacket = ethernetPacket.IpV4;
         var tcpPacket = ipPacket.Tcp;
-
-        if (!tcpPacket.IsValid || !ethernetPacket.IsValid || !ipPacket.IsValid)
+        
+        if (tcpPacket.Payload == null)
         {
             throw new Exception("Not valid packet!");
         }
 
         SourceDevice = new INetPacket.Device(tcpPacket.SourcePort, 
-            ipPacket.Source.ToString(),ethernetPacket.Source.ToString());
+            ethernetPacket.Source.ToString(),ipPacket.Source.ToString());
         DestinationDevice = new INetPacket.Device(tcpPacket.DestinationPort, 
             ethernetPacket.Destination.ToString(), ipPacket.Destination.ToString());
         

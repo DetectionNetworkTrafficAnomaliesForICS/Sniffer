@@ -7,6 +7,6 @@ namespace Sniffer.Lib.Services.Interfaces;
 
 public interface ISnifferService
 {
-    Task<List<INetPacket>> CapturePacketsAsync(INetDevice netDevice,
+    Task<List<INetPacket>> CapturePacketsAsync(INetDevice netDevice, IFilter filter,
         CancellationToken cancellationToken);
 }

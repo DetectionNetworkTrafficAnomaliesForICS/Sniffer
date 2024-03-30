@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
+using Sniffer.Core.Models;
 using Sniffer.Lib.Services.Interfaces;
 
 namespace Sniffer.CLI.Commands;
@@ -24,8 +24,9 @@ public class SnifferCommands
         {
             var cancelToken = new CancellationTokenSource();
 
-             
-            var taskCapture = _snifferService.CapturePacketsAsync(_settingsService.NetDevice,cancelToken.Token);
+
+            var taskCapture = _snifferService.CapturePacketsAsync(_settingsService.NetDevice,
+                new DeviceFilter(_settingsService.FilteredDevice), cancelToken.Token);
 
             Console.WriteLine("Press `Enter` to finish");
             Console.ReadLine();

@@ -17,7 +17,7 @@ public class SnifferServiceImpl : ISnifferService
         _appConfig = appConfig;
     }
 
-    public async Task<List<INetPacket>> CapturePacketsAsync(INetDevice netDevice,
+    public async Task<List<INetPacket>> CapturePacketsAsync(INetDevice netDevice, IFilter filter,
         CancellationToken cancellationToken)
     {
         var packets = new List<INetPacket>();
@@ -29,7 +29,10 @@ public class SnifferServiceImpl : ISnifferService
                 var code = netCatcher.ReceivePacket(out var packet);
                 if (code == INetCatcher.ReceiveResult.Ok)
                 {
-                    packets.Add(packet!);
+                    if (filter.Check(packet!))
+                    {
+                        packets.Add(packet!);
+                    }
                 }
             }
 

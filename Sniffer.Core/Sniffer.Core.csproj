@@ -103,6 +103,7 @@
         <Compile Include="Configuration\FolderConfiguration.cs" />
         <Compile Include="Configuration\NetConfiguration.cs" />
         <Compile Include="Models\CsvPacket.cs" />
+        <Compile Include="Models\DeviceFilter.cs" />
         <Compile Include="Models\ModbusPacket.cs" />
         <Compile Include="Models\PcapDevice.cs" />
         <Compile Include="Models\PcapNetCatcher.cs" />

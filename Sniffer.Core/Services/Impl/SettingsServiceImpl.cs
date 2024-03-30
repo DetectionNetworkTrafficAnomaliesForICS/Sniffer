@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using Sniffer.Core.Configuration;
 using Sniffer.Lib.Models;
@@ -61,6 +61,19 @@ public class SettingsServiceImpl : ISettingsService
         {
             if (value != null)
                 _preferenceRepository.TrySet(nameof(NetDevice), value.Name);
+        }
+    }
+
+    public IEnumerable<INetPacket.Device> FilteredDevice
+    {
+        get
+        {
+            if (_appConfig.Value.FilteredDevices == null)
+            {
+                return new List<INetPacket.Device>();
+            }
+
+            return _appConfig.Value.FilteredDevices;
         }
     }
 
