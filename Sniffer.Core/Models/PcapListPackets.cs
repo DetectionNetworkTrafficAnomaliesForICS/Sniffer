@@ -9,31 +9,40 @@ namespace Sniffer.Core.Models;
 public class PcapListPackets : IListPackets
 {
     private readonly List<Packet> _packets = [];
+    private readonly List<INetPacket> _pcapPackets = [];
+
+    public IFilter? Filter { get; set; }
 
     public void Add(Packet packet)
     {
-        _packets.Add(packet);
+        PcapPacket? pcap;
+        try
+        {
+            pcap = new PcapPacket(packet);
+        }
+        catch (Exception)
+        {
+            return;
+        }
+
+        if (Filter != null)
+        {
+            if (Filter.Check(pcap))
+            {
+                _pcapPackets.Add(pcap);
+                _packets.Add(packet);
+            }
+        }
+        else
+        {
+            _pcapPackets.Add(pcap);
+            _packets.Add(packet);
+        }
     }
 
     public IEnumerator<INetPacket> GetEnumerator()
     {
-        foreach (var p in _packets)
-        {
-            PcapPacket? packet = null;
-            try
-            {
-                packet = new PcapPacket(p);
-            }
-            catch (Exception)
-            {
-                // Обработка ошибки
-            }
-
-            if (packet != null)
-            {
-                yield return packet;
-            }
-        }
+        return _pcapPackets.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()

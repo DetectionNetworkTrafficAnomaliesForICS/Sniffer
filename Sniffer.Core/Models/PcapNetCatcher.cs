@@ -18,7 +18,10 @@ public class PcapNetCatcher : INetCatcher
 
     public async Task<IListPackets> ReceivePacket(IFilter filter, CancellationToken cancellationToken)
     {
-        var packets = new PcapListPackets();
+        var packets = new PcapListPackets
+        {
+            Filter = filter
+        };
         return await Task.Run(() =>
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -39,5 +42,4 @@ public class PcapNetCatcher : INetCatcher
         _packetCommunicator.Break();
         _packetCommunicator.Dispose();
     }
-    
 }
