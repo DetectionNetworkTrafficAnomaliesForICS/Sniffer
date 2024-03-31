@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using PcapDotNet.Core;
+using PcapDotNet.Packets;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
@@ -15,9 +16,9 @@ public class PcapNetCatcher : INetCatcher
         _packetCommunicator = packetCommunicator;
     }
 
-    public async Task<List<INetPacket>> ReceivePacket(IFilter filter, CancellationToken cancellationToken)
+    public async Task<IListPackets> ReceivePacket(IFilter filter, CancellationToken cancellationToken)
     {
-        var packets = new List<INetPacket>();
+        var packets = new PcapListPackets();
         return await Task.Run(() =>
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -25,11 +26,7 @@ public class PcapNetCatcher : INetCatcher
                 var result = _packetCommunicator.ReceivePacket(out var p);
                 if (result == PacketCommunicatorReceiveResult.Ok)
                 {
-                    var packet = new PcapPacket(p!);
-                    if (filter.Check(packet))
-                    {
-                        packets.Add(packet);
-                    }
+                    packets.Add(p);
                 }
             }
 
@@ -42,4 +39,5 @@ public class PcapNetCatcher : INetCatcher
         _packetCommunicator.Break();
         _packetCommunicator.Dispose();
     }
+    
 }

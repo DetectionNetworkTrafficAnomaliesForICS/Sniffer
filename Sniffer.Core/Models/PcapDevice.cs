@@ -1,4 +1,5 @@
 ﻿using PcapDotNet.Core;
+using PcapDotNet.Packets;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
@@ -14,7 +15,7 @@ public class PcapDevice : INetDevice
         _captureDevice = captureDevice;
         Name = captureDevice.Name;
     }
-
+    
     public INetCatcher Open(int timeout)
     {
         return new PcapNetCatcher(_captureDevice.Open(655360, PacketDeviceOpenAttributes.Promiscuous, timeout));

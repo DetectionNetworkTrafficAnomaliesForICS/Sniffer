@@ -6,5 +6,5 @@ namespace Sniffer.Lib.Services.Interfaces;
 
 public interface ISaveService
 {
-    void SavePackets<T>(string name, IEnumerable<INetPacket> list, Func<INetPacket, IModbusPacket, T> fun);
+    void SavePackets<T>(string name,  IListPackets packets, Func<INetPacket, IModbusPacket, T> fun);
 }

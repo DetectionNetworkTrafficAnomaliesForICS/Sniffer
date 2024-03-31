@@ -17,7 +17,7 @@ public class SnifferServiceImpl : ISnifferService
         _appConfig = appConfig;
     }
 
-    public async Task<List<INetPacket>> CapturePacketsAsync(INetDevice netDevice, IFilter filter,
+    public async Task<IListPackets> CapturePacketsAsync(INetDevice netDevice, IFilter filter,
         CancellationToken cancellationToken)
     {
         using var netCatcher = netDevice.Open(_appConfig.Value.RecheckingCancelTime);

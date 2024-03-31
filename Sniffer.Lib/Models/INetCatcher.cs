@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Sniffer.Lib.Models;
 
-public interface INetCatcher: IDisposable
+public interface INetCatcher : IDisposable
 {
-    Task<List<INetPacket>> ReceivePacket(IFilter filter,
+    Task<IListPackets> ReceivePacket(IFilter filter,
         CancellationToken cancellationToken);
 }

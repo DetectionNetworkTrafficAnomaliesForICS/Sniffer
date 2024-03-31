@@ -3,8 +3,15 @@ using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
-public class SystemFile(string name) : IFile
+public class SystemFile : IFile
 {
-    public StreamWriter Writer => new(name);
-    public StreamReader Reader => new(name);
+    public string Path { get; }
+
+    public SystemFile(string path)
+    {
+        Path = path;
+    }
+
+    public StreamWriter Writer => new(Path);
+    public StreamReader Reader => new(Path);
 }

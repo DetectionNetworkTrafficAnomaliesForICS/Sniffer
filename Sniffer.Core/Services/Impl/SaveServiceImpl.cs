@@ -22,13 +22,13 @@ public class SaveServiceImpl : ISaveService
         _modbusService = modbusService;
     }
 
-    public void SavePackets<T>(string name, IEnumerable<INetPacket> list, Func<INetPacket, IModbusPacket, T> fun)
+    public void SavePackets<T>(string name, IListPackets packets, Func<INetPacket, IModbusPacket, T> fun)
     {
         if (_settingsService.TrafficFolder == null) return;
-        if (_folderRepository.TryCreateFile(_settingsService.TrafficFolder, name, out var file))
+        if (_folderRepository.TryCreateFile(_settingsService.TrafficFolder, name + ".csv", out var csvFile))
         {
             var result = new List<T>();
-            foreach (var packet in list)
+            foreach (var packet in packets)
             {
                 if (_modbusService.TryConvertToModbusPacket(packet, out var modbus))
                 {
@@ -36,7 +36,12 @@ public class SaveServiceImpl : ISaveService
                 }
             }
 
-            _csvRepository.TryWriteCsvFile(file!, result);
+            _csvRepository.TryWriteCsvFile(csvFile!, result);
+        }
+
+        if (_folderRepository.TryCreateFile(_settingsService.TrafficFolder, name + ".pcap", out var pcapFile))
+        {
+            packets.GetDump.Save(pcapFile!.Path);
         }
     }
 }

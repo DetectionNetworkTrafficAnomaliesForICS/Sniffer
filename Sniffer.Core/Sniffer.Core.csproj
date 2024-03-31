@@ -106,6 +106,8 @@
         <Compile Include="Models\DeviceFilter.cs" />
         <Compile Include="Models\ModbusPacket.cs" />
         <Compile Include="Models\PcapDevice.cs" />
+        <Compile Include="Models\PcapDumpPackets.cs" />
+        <Compile Include="Models\PcapListPackets.cs" />
         <Compile Include="Models\PcapNetCatcher.cs" />
         <Compile Include="Models\PcapPacket.cs" />
         <Compile Include="Models\SystemFile.cs" />
@@ -116,7 +118,7 @@
         <Compile Include="Repositories\Impl\NetInterfaceRepositoryImpl.cs" />
         <Compile Include="Repositories\Impl\PreferenceRepositoryImpl.cs" />
         <Compile Include="Repositories\RepositoriesDependencies.cs" />
-        <Compile Include="Services\Impl\CsvServiceImpl.cs" />
+        <Compile Include="Services\Impl\SaveServiceImpl.cs" />
         <Compile Include="Services\Impl\ModbusServiceImpl.cs" />
         <Compile Include="Services\Impl\NetInterfaceServiceImpl.cs" />
         <Compile Include="Services\Impl\SettingsServiceImpl.cs" />

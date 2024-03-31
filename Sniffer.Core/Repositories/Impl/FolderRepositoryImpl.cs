@@ -1,5 +1,4 @@
 ﻿using System;
-using Sniffer.Core.Configuration;
 using Sniffer.Core.Models;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;

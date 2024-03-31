@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Sniffer.Core.Models;
 using Sniffer.Lib.Services.Interfaces;
@@ -35,7 +36,7 @@ public class SnifferCommands
 
             var packets = taskCapture.Result;
 
-            Console.WriteLine($"{packets.Count} files intercepted");
+            Console.WriteLine($"{packets.Count()} files intercepted");
             Console.WriteLine("Write a name to save");
 
             var name = Console.ReadLine();

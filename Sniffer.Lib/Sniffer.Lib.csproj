@@ -41,9 +41,11 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Models\IDumpPackets.cs" />
         <Compile Include="Models\IFile.cs" />
         <Compile Include="Models\IFilter.cs" />
         <Compile Include="Models\IFolder.cs" />
+        <Compile Include="Models\IListPackets.cs" />
         <Compile Include="Models\IModbusPacket.cs" />
         <Compile Include="Models\INetCatcher.cs" />
         <Compile Include="Models\INetDevice.cs" />
@@ -61,6 +63,7 @@
     </ItemGroup>
     <ItemGroup>
       <None Include=".gitignore" />
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
