@@ -10,11 +10,13 @@ public class MainWorker : BackgroundService
 {
     private readonly SettingCommands _settingCommands;
     private readonly SnifferCommands _snifferCommands;
+    private readonly IHostApplicationLifetime _applicationLifetime;
 
-    public MainWorker(SettingCommands settingCommands, SnifferCommands snifferCommands)
+    public MainWorker(SettingCommands settingCommands, SnifferCommands snifferCommands, IHostApplicationLifetime applicationLifetime)
     {
         _settingCommands = settingCommands;
         _snifferCommands = snifferCommands;
+        _applicationLifetime = applicationLifetime;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -42,6 +44,7 @@ public class MainWorker : BackgroundService
                     break;
                 case "3":
                     Console.WriteLine("Exiting program. Goodbye!");
+                    _applicationLifetime.StopApplication();
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please enter a number between 1 and 3.");
