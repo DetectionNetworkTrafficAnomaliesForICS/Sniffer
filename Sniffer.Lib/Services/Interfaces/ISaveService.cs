@@ -3,7 +3,7 @@ using Sniffer.Lib.Models;
 
 namespace Sniffer.Lib.Services.Interfaces;
 
-public interface ICsvService
+public interface ISaveService
 {
-    void WriteModbusPackets(string name, List<INetPacket> list);
+    void WritePackets(string name, IEnumerable<INetPacket> list);
 }

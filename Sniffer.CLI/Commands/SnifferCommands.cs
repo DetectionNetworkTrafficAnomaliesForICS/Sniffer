@@ -9,13 +9,13 @@ public class SnifferCommands
 {
     private readonly ISnifferService _snifferService;
     private readonly ISettingsService _settingsService;
-    private readonly ICsvService _csvService;
+    private readonly ISaveService _saveService;
 
-    public SnifferCommands(ISnifferService snifferService, ISettingsService settingsService, ICsvService csvService)
+    public SnifferCommands(ISnifferService snifferService, ISettingsService settingsService, ISaveService saveService)
     {
         _snifferService = snifferService;
         _settingsService = settingsService;
-        _csvService = csvService;
+        _saveService = saveService;
     }
 
     public void Run()
@@ -39,7 +39,7 @@ public class SnifferCommands
             Console.WriteLine("Write a name to save");
 
             var name = Console.ReadLine();
-            if (name != null) _csvService.WriteModbusPackets(name, packets);
+            if (name != null) _saveService.WritePackets(name, packets);
         }
         else
         {

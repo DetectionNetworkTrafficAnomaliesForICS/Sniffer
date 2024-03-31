@@ -53,8 +53,7 @@
         <Compile Include="Repositories\Interfaces\IFolderRepository.cs" />
         <Compile Include="Repositories\Interfaces\INetInterfaceRepository.cs" />
         <Compile Include="Repositories\Interfaces\IPreferenceRepository.cs" />
-        <Compile Include="Services\Interfaces\ICsvService.cs" />
-        <Compile Include="Services\Interfaces\IDirectoryService.cs" />
+        <Compile Include="Services\Interfaces\ISaveService.cs" />
         <Compile Include="Services\Interfaces\IModbusService.cs" />
         <Compile Include="Services\Interfaces\INetService.cs" />
         <Compile Include="Services\Interfaces\ISettingsService.cs" />

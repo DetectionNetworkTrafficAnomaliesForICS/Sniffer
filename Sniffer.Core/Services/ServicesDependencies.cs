@@ -12,6 +12,6 @@ public static class ServicesDependencies
         services.AddSingleton<ISnifferService, SnifferServiceImpl>();
         services.AddSingleton<IModbusService, ModbusServiceImpl>();
         services.AddSingleton<INetService, NetInterfaceServiceImpl>();
-        services.AddSingleton<ICsvService, CsvServiceImpl>();
+        services.AddSingleton<ISaveService, SaveServiceImpl>();
     }
 }
