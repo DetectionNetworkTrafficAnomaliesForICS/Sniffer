@@ -1,15 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sniffer.Lib.Models;
 
 public interface INetCatcher: IDisposable
 {
-    ReceiveResult ReceivePacket(out INetPacket? packet);
-    
-    enum ReceiveResult
-    {
-        Ok,
-        Timeout,
-        Error
-    }
+    Task<List<INetPacket>> ReceivePacket(IFilter filter,
+        CancellationToken cancellationToken);
 }

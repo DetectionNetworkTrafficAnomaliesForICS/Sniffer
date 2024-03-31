@@ -20,23 +20,7 @@ public class SnifferServiceImpl : ISnifferService
     public async Task<List<INetPacket>> CapturePacketsAsync(INetDevice netDevice, IFilter filter,
         CancellationToken cancellationToken)
     {
-        var packets = new List<INetPacket>();
         using var netCatcher = netDevice.Open(_appConfig.Value.RecheckingCancelTime);
-        return await Task.Run(() =>
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                var code = netCatcher.ReceivePacket(out var packet);
-                if (code == INetCatcher.ReceiveResult.Ok)
-                {
-                    if (filter.Check(packet!))
-                    {
-                        packets.Add(packet!);
-                    }
-                }
-            }
-
-            return Task.FromResult(packets);
-        });
+        return await netCatcher.ReceivePacket(filter, cancellationToken);
     }
 }

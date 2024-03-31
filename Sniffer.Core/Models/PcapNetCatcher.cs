@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using PcapDotNet.Core;
 using Sniffer.Lib.Models;
 
@@ -13,29 +15,26 @@ public class PcapNetCatcher : INetCatcher
         _packetCommunicator = packetCommunicator;
     }
 
-    public INetCatcher.ReceiveResult ReceivePacket(out INetPacket? packet)
+    public async Task<List<INetPacket>> ReceivePacket(IFilter filter, CancellationToken cancellationToken)
     {
-        var result = _packetCommunicator.ReceivePacket(out var p);
-        switch (result)
+        var packets = new List<INetPacket>();
+        return await Task.Run(() =>
         {
-            case PacketCommunicatorReceiveResult.Ok:
-                try
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var result = _packetCommunicator.ReceivePacket(out var p);
+                if (result == PacketCommunicatorReceiveResult.Ok)
                 {
-                    packet = new PcapPacket(p);
-                    return INetCatcher.ReceiveResult.Ok;
+                    var packet = new PcapPacket(p!);
+                    if (filter.Check(packet))
+                    {
+                        packets.Add(packet);
+                    }
                 }
-                catch (Exception)
-                {
-                    packet = default;
-                    return INetCatcher.ReceiveResult.Error;
-                }
-            case PacketCommunicatorReceiveResult.Timeout:
-                packet = default;
-                return INetCatcher.ReceiveResult.Timeout;
-            default:
-                packet = default;
-                return INetCatcher.ReceiveResult.Error;
-        }
+            }
+
+            return Task.FromResult(packets);
+        });
     }
 
     public void Dispose()
