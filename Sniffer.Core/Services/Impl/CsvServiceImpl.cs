@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Sniffer.Core.Models;
+﻿using System;
+using System.Collections.Generic;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 using Sniffer.Lib.Services.Interfaces;
@@ -22,17 +22,17 @@ public class SaveServiceImpl : ISaveService
         _modbusService = modbusService;
     }
 
-    public void WritePackets(string name, IEnumerable<INetPacket> list)
+    public void SavePackets<T>(string name, IEnumerable<INetPacket> list, Func<INetPacket, IModbusPacket, T> fun)
     {
         if (_settingsService.TrafficFolder == null) return;
         if (_folderRepository.TryCreateFile(_settingsService.TrafficFolder, name, out var file))
         {
-            var result = new List<CsvPacket>();
+            var result = new List<T>();
             foreach (var packet in list)
             {
                 if (_modbusService.TryConvertToModbusPacket(packet, out var modbus))
                 {
-                    result.Add(new CsvPacket(modbus!, packet));
+                    result.Add(fun(packet, modbus!));
                 }
             }
 

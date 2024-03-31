@@ -39,7 +39,9 @@ public class SnifferCommands
             Console.WriteLine("Write a name to save");
 
             var name = Console.ReadLine();
-            if (name != null) _saveService.WritePackets(name, packets);
+            if (name != null)
+                _saveService.SavePackets(name, packets,
+                    (netPacket, modbusPacket) => new CsvPacket(modbusPacket, netPacket));
         }
         else
         {
