@@ -6,5 +6,6 @@ public interface IModbusPacket
     ushort ProtocolId { get; }
     ushort LenRemainingPackage { get; }
     byte DeviceId { get; }
+    bool Request { get; }
     byte[] Pdu { get; }
 }
