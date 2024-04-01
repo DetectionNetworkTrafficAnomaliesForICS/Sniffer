@@ -71,5 +71,13 @@ public class ModbusServiceImpl : IModbusService
                 Array.Copy(bytes, 0, packet.PayloadBytes, 0, (int)packet.CountByte);
             }
         }
+
+        if (funCode is 5 or 6)
+        {
+            packet.AddressRegister = BitConverter.ToUInt16(bytes, bytes.Length - 10);
+            packet.CountByte = 2;
+            packet.PayloadBytes = new byte[(int)packet.CountByte];
+            Array.Copy(bytes, 0, packet.PayloadBytes, 0, (int)packet.CountByte);
+        }
     }
 }
