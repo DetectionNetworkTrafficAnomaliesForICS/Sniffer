@@ -64,16 +64,16 @@ public class SettingsServiceImpl : ISettingsService
         }
     }
 
-    public IEnumerable<INetPacket.Device> FilteredDevice
+    public IEnumerable<INetPacket.Device> ModbusServers
     {
         get
         {
-            if (_appConfig.Value.FilteredDevices == null)
+            if (_appConfig.Value.ModbusServers == null)
             {
                 return new List<INetPacket.Device>();
             }
 
-            return _appConfig.Value.FilteredDevices;
+            return _appConfig.Value.ModbusServers;
         }
     }
 

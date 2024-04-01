@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using PcapDotNet.Core;
-using Sniffer.Core.Configuration;
 using Sniffer.Core.Models;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;

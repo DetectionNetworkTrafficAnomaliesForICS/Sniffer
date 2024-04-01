@@ -27,7 +27,7 @@ public class SnifferCommands
 
 
             var taskCapture = _snifferService.CapturePacketsAsync(_settingsService.NetDevice,
-                new DeviceFilter(_settingsService.FilteredDevice), cancelToken.Token);
+                new DeviceFilter(_settingsService.ModbusServers), cancelToken.Token);
 
             Console.WriteLine("Press `Enter` to finish");
             Console.ReadLine();

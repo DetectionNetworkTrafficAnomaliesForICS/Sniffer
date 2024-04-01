@@ -7,5 +7,5 @@ public interface ISettingsService
 {
     IFolder? TrafficFolder { get; set; }
     INetDevice? NetDevice { get; set; }
-    IEnumerable<INetPacket.Device> FilteredDevice { get; }
+    IEnumerable<INetPacket.Device> ModbusServers { get; }
 }
