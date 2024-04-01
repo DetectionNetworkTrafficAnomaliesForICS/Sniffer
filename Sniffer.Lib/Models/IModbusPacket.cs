@@ -10,7 +10,7 @@ public interface IModbusPacket
     ushort? AddressRegister { get; }
     byte? CountByte { get; }
     ushort? CountRegisters { get; }
-    byte[]? ReadBytes { get; }
+    byte[]? PayloadBytes { get; }
     public byte Function { get; }
     byte[] Pdu { get; }
 }

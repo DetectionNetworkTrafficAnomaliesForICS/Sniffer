@@ -55,8 +55,20 @@ public class ModbusServiceImpl : IModbusService
             else
             {
                 packet.CountByte = bytes[bytes.Length - 9];
-                packet.ReadBytes = new byte[(int)packet.CountByte];
-                Array.Copy(bytes, 0, packet.ReadBytes, 0, (int)packet.CountByte);
+                packet.PayloadBytes = new byte[(int)packet.CountByte];
+                Array.Copy(bytes, 0, packet.PayloadBytes, 0, (int)packet.CountByte);
+            }
+        }
+
+        if (funCode is 15 or 16)
+        {
+            packet.AddressRegister = BitConverter.ToUInt16(bytes, bytes.Length - 10);
+            packet.CountRegisters = BitConverter.ToUInt16(bytes, bytes.Length - 12);
+            if (request)
+            {
+                packet.CountByte = bytes[bytes.Length - 13];
+                packet.PayloadBytes = new byte[(int)packet.CountByte];
+                Array.Copy(bytes, 0, packet.PayloadBytes, 0, (int)packet.CountByte);
             }
         }
     }
