@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Sniffer.Lib.Models;
 
@@ -15,16 +16,6 @@ public class DeviceFilter : IFilter
 
     public bool Check(INetPacket packet)
     {
-        foreach (var device in Devices)
-        {
-            if (packet.SourceDevice.Port == device.Port &&
-                packet.SourceDevice.IpAddress == device.IpAddress ||
-                packet.DestinationDevice.IpAddress == device.IpAddress &&
-                packet.DestinationDevice.Port == device.Port
-               )
-                return true;
-        }
-
-        return false;
+        return Devices.Any(device => device == packet.SourceDevice || device == packet.DestinationDevice);
     }
 }

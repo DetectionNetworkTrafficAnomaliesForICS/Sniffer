@@ -26,5 +26,15 @@ public interface INetPacket
             MacAddress = macAddress;
             IpAddress = ipAddress;
         }
+
+        public static bool operator ==(Device left, Device right)
+        {
+            return left.Port == right.Port && left.IpAddress == right.IpAddress && left.MacAddress == right.MacAddress;
+        }
+
+        public static bool operator !=(Device left, Device right)
+        {
+            return !(left == right);
+        }
     }
 }
