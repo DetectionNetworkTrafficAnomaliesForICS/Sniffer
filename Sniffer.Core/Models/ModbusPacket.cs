@@ -21,6 +21,10 @@ public class ModbusPacket : IModbusPacket
     public ushort LenRemainingPackage { get; }
     public byte DeviceId { get; }
     public bool Request { get; }
+    public ushort? AddressRegister { get; set; }
+    public byte? CountByte { get; set; }
+    public ushort? CountRegisters { get; set; }
+    public byte[]? ReadBytes { get; set; }
     public byte Function { get; }
     public byte[] Pdu { get; }
 }
