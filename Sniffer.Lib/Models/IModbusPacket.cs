@@ -7,5 +7,6 @@ public interface IModbusPacket
     ushort LenRemainingPackage { get; }
     byte DeviceId { get; }
     bool Request { get; }
+    public byte Function { get; }
     byte[] Pdu { get; }
 }

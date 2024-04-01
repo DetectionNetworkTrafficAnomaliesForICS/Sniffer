@@ -28,7 +28,7 @@ public class ModbusServiceImpl : IModbusService
             var function = bytes[bytes.Length - 8];
             var pdu = new byte[bytes.Length - 7];
             Array.Copy(bytes, 0, pdu, 0, bytes.Length - 7);
-
+            
             result = new ModbusPacket(tranId, protocolId, len, deviceId, function, pdu, request);
             return true;
         }
