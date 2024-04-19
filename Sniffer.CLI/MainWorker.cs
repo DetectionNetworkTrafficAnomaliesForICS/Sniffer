@@ -21,7 +21,11 @@ public class MainWorker : BackgroundService
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        Console.WriteLine("Hello, this CLI program Sniffer!");
+        Console.WriteLine("Launch of the program \"Sniffer\"");
+        Console.WriteLine("A component of a bachelor's degree NSU Information Technology Department");
+        Console.WriteLine("Student: Kotov Rodion");
+        Console.WriteLine("Organization: Institute of Automation and Electrometry of the Siberian Branch of the RAS");
+        Console.WriteLine("\n");
 
         while (!stoppingToken.IsCancellationRequested)
         {

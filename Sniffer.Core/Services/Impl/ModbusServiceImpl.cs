@@ -27,13 +27,11 @@ public class ModbusServiceImpl : IModbusService
             var len = BitConverter.ToUInt16(bytes, bytes.Length - 6);
             var deviceId = bytes[bytes.Length - 7];
             var function = bytes[bytes.Length - 8];
-            var pdu = new byte[bytes.Length - 7];
-            Array.Copy(bytes, 0, pdu, 0, bytes.Length - 7);
 
-            var f = new ModbusPacket(tranId, protocolId, len, deviceId, function, pdu, request);
-            ParserFun(request, function, bytes, f);
+            var modbusPacket = new ModbusPacket(tranId, protocolId, len, deviceId, function, request);
+            ParserFun(request, function, bytes, modbusPacket);
 
-            result = f;
+            result = modbusPacket;
             return true;
         }
         catch (Exception)

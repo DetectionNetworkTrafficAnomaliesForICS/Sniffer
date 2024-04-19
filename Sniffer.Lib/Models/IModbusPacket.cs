@@ -1,6 +1,7 @@
 ﻿namespace Sniffer.Lib.Models;
 
-public interface IModbusPacket
+public interface 
+    IModbusPacket
 {
     ushort TransactionId { get; }
     ushort ProtocolId { get; }
@@ -12,5 +13,4 @@ public interface IModbusPacket
     ushort? CountRegisters { get; }
     byte[]? PayloadBytes { get; }
     public byte Function { get; }
-    byte[] Pdu { get; }
 }

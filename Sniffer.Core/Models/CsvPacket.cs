@@ -5,7 +5,7 @@ namespace Sniffer.Core.Models;
 
 public class CsvPacket
 {
-    public DateTime DateTime { get; }
+    public string DateTime { get; }
 
     public uint SourcePort { get; }
     public string SourceMacAddress { get; }
@@ -14,15 +14,17 @@ public class CsvPacket
     public uint DestinationPort { get; }
     public string DestinationMacAddress { get; }
     public string DestinationIpAddress { get; }
-
-    public uint Ttl { get; }
+    
     public uint SequenceNumber { get; }
     public uint AcknowledgementNumber { get; }
-    public uint CheckSum { get; }
 
+    public byte[] PayloadTcp { get; }
+    
     public IModbusPacket Packet { get; }
+    
+    public bool Anomaly { get; }
 
-    public CsvPacket(IModbusPacket modbus, INetPacket netPacket)
+    public CsvPacket(IModbusPacket modbusPacket, INetPacket netPacket)
     {
         SourcePort = netPacket.SourceDevice.Port;
         SourceIpAddress = netPacket.SourceDevice.IpAddress;
@@ -31,13 +33,15 @@ public class CsvPacket
         DestinationPort = netPacket.DestinationDevice.Port;
         DestinationIpAddress = netPacket.DestinationDevice.IpAddress;
         DestinationMacAddress = netPacket.DestinationDevice.MacAddress;
-
-        Ttl = netPacket.Ttl;
+        
         SequenceNumber = netPacket.SequenceNumber;
         AcknowledgementNumber = netPacket.AcknowledgementNumber;
-        CheckSum = netPacket.CheckSum;
 
-        Packet = modbus;
-        DateTime = netPacket.DateTime;
+        Packet = modbusPacket;
+        PayloadTcp = netPacket.Data;
+        DateTime = netPacket.DateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+        Anomaly = modbusPacket.PayloadBytes != null &&
+                  modbusPacket.Request && BitConverter.ToSingle(modbusPacket.PayloadBytes, 0) > 10f;
     }
 }

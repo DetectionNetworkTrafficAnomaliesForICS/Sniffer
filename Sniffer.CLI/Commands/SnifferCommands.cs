@@ -42,7 +42,17 @@ public class SnifferCommands
             var name = Console.ReadLine();
             if (name != null)
                 _saveService.SavePackets(name, packets,
-                    (netPacket, modbusPacket) => new CsvPacket(modbusPacket, netPacket));
+                    (netPacket, modbusPacket) => new CsvPacket(modbusPacket, netPacket)
+                    // {
+                    //     DateTime = netPacket.DateTime.ToBinary(),
+                    //     SrcMacAddress = netPacket.SourceDevice.MacAddress,
+                    //     DstMacAddress = netPacket.DestinationDevice.MacAddress,
+                    //     CountData = netPacket.Data.Length,
+                    //     Data = netPacket.Data.ToArray(),
+                    //     Anomaly = modbusPacket.PayloadBytes != null &&
+                    //               modbusPacket.Request && BitConverter.ToSingle(modbusPacket.PayloadBytes, 0) > 4.2f
+                    // }
+                );
         }
         else
         {

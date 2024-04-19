@@ -7,6 +7,17 @@ namespace Sniffer.Core.Models;
 
 public class PcapPacket : INetPacket
 {
+    public DateTime DateTime { get; }
+    public INetPacket.Device SourceDevice { get; }
+    public INetPacket.Device DestinationDevice { get; }
+
+    public uint Ttl { get; }
+    public uint SequenceNumber { get; }
+    public uint AcknowledgementNumber { get; }
+    public ushort CheckSum { get; }
+
+    public byte[] Data { get; }
+    
     public PcapPacket(Packet packetCapture)
     {
         DateTime = DateTime.Now;
@@ -30,15 +41,4 @@ public class PcapPacket : INetPacket
         CheckSum = tcpPacket.Checksum;
         Data = tcpPacket.Payload.ToArray();
     }
-
-    public DateTime DateTime { get; }
-    public INetPacket.Device SourceDevice { get; }
-    public INetPacket.Device DestinationDevice { get; }
-
-    public uint Ttl { get; }
-    public uint SequenceNumber { get; }
-    public uint AcknowledgementNumber { get; }
-    public ushort CheckSum { get; }
-
-    public byte[] Data { get; }
 }
