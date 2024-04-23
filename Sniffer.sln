@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib", "Lib\Lib.csproj", "{8FDF9CE4-7C3A-490A-9FFE-30121D82CC97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sniffer.Lib", "Sniffer.Lib\Sniffer.Lib.csproj", "{8FDF9CE4-7C3A-490A-9FFE-30121D82CC97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{EF93DABB-677B-4B6D-B7EA-310DB46F1111}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sniffer.Core", "Sniffer.Core\Sniffer.Core.csproj", "{EF93DABB-677B-4B6D-B7EA-310DB46F1111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI", "CLI\CLI.csproj", "{4780BC34-2952-4CF8-8E37-1F049955D71C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sniffer.CLI", "Sniffer.CLI\Sniffer.CLI.csproj", "{4780BC34-2952-4CF8-8E37-1F049955D71C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,25 @@
+﻿using System.Globalization;
+using CsvHelper;
+using Sniffer.Lib.Models;
+using Sniffer.Lib.Repositories.Interfaces;
+
+namespace Sniffer.Core.Repositories.Impl;
+
+public class CsvRepositoryImpl : ICsvRepository
+{
+    public bool TryWriteCsvFile<T>(IFile file, IEnumerable<T> list)
+    {
+        try
+        {
+            using var writer = file.Writer;
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csv.WriteRecords(list);
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+}
