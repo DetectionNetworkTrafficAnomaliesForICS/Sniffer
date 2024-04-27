@@ -3,6 +3,6 @@
 public interface INetDevice
 {
     string Name { get; }
-    INetCatcher Open(int timeout);
+    INetCatcher Open(int timeout, int capacity);
     void Close();
 }

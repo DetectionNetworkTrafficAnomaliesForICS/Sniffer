@@ -7,17 +7,18 @@ namespace Sniffer.Core.Services.Impl;
 
 public class SnifferServiceImpl : ISnifferService
 {
-    private readonly IOptions<AppConfiguration> _appConfig;
+    private readonly AppConfiguration _appConfig;
 
     public SnifferServiceImpl(IOptions<AppConfiguration> appConfig)
     {
-        _appConfig = appConfig;
+        _appConfig = appConfig.Value;
     }
 
     public async Task<IListPackets> CapturePacketsAsync(INetDevice netDevice, IFilter filter,
         CancellationToken cancellationToken)
     {
-        using var netCatcher = netDevice.Open(_appConfig.Value.RecheckingCancelTime);
-        return await netCatcher.ReceivePacket(filter, cancellationToken);
+        using var netCatcher = netDevice.Open(_appConfig.RecheckingCancelTime, _appConfig.CapacityPackets);
+        netCatcher.Capture(cancellationToken);
+        return await netCatcher.StreamPackets.Filtered(filter).ToList();
     }
 }

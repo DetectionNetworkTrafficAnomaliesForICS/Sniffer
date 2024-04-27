@@ -39,7 +39,7 @@ public class SaveServiceImpl : ISaveService
 
         if (_folderRepository.TryCreateFile(_settingsService.TrafficFolder, name + ".pcap", out var pcapFile))
         {
-            packets.GetDump.Save(pcapFile!.Path);
+            packets.GetDumpPackets.Save(pcapFile!.Path);
         }
     }
 }

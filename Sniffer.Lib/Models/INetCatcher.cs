@@ -2,6 +2,6 @@
 
 public interface INetCatcher : IDisposable
 {
-    Task<IListPackets> ReceivePacket(IFilter filter,
-        CancellationToken cancellationToken);
+   IStreamPackets StreamPackets { get; }
+   void Capture(CancellationToken cancellationToken);
 }

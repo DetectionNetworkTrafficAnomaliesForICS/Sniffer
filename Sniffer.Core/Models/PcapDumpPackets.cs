@@ -1,19 +1,20 @@
-﻿using PcapDotNet.Packets;
+﻿using PcapDotNet.Core;
+using PcapDotNet.Packets;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
 public class PcapDumpPackets : IDumpPackets
 {
-    private IEnumerable<Packet> Packets { get; }
+    private IEnumerable<PcapPacket> Packets { get; }
     
-    public PcapDumpPackets(IEnumerable<Packet> packets)
+    public PcapDumpPackets(IEnumerable<PcapPacket> packets)
     {
         Packets = packets;
     }
 
     public void Save(string pathName)
     {
-       // PacketDumpFile.Dump(pathName, DataLinkKind.Ethernet, 655360, Packets);
+       PacketDumpFile.Dump(pathName, DataLinkKind.Ethernet, 655360, Packets.Select(pcap => pcap.Packet));
     }
 }

@@ -16,8 +16,11 @@ public class PcapPacket : INetPacket
 
     public byte[] Data { get; }
     
+    public Packet Packet { get; }
+    
     public PcapPacket(Packet packetCapture)
     {
+        Packet = packetCapture;
         DateTime = DateTime.Now;
         var ethernetPacket = packetCapture.Ethernet;
         var ipPacket = ethernetPacket.IpV4;
