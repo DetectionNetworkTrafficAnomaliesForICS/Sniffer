@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Sniffer.Core.Configuration;
+using Sniffer.Core.Models;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 using Sniffer.Lib.Services.Interfaces;
@@ -38,11 +39,11 @@ public class SettingsServiceImpl : ISettingsService
         }
     }
 
-    public INetDevice? NetDevice
+    public INetInterface? NetInterface
     {
         get
         {
-            if (_preferenceRepository.TryGet<string>(nameof(NetDevice), out var name))
+            if (_preferenceRepository.TryGet<string>(nameof(NetInterface), out var name))
             {
                 _netInterfaceRepository.TryGetByName(name!, out var device);
                 return device;
@@ -59,17 +60,17 @@ public class SettingsServiceImpl : ISettingsService
         set
         {
             if (value != null)
-                _preferenceRepository.TrySet(nameof(NetDevice), value.Name);
+                _preferenceRepository.TrySet(nameof(NetInterface), value.Name);
         }
     }
 
-    public IEnumerable<INetPacket.Device> ModbusServers
+    public IEnumerable<INetDevice> ModbusServers
     {
         get
         {
             if (_appConfig.Value.ModbusServers == null)
             {
-                return new List<INetPacket.Device>();
+                return new List<NetDevice>();
             }
 
             return _appConfig.Value.ModbusServers;

@@ -7,7 +7,7 @@ namespace Sniffer.Core.Repositories.Impl;
 
 public class NetInterfaceRepositoryImpl : INetInterfaceRepository
 {
-    public bool TryGetByName(string name, out INetDevice? result, INetDevice? defaultValue = default)
+    public bool TryGetByName(string name, out INetInterface? result, INetInterface? defaultValue = default)
     {
         try
         {
@@ -16,7 +16,7 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
             {
                 if (device.Name.Equals(name))
                 {
-                    result = new PcapDevice(device);
+                    result = new PcapInterface(device);
                     return true;
                 }
             }
@@ -31,11 +31,11 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
         return false;
     }
 
-    public List<INetDevice> GetAll()
+    public List<INetInterface> GetAll()
     {
         var allDevices = CaptureDeviceList.Instance;
         return allDevices != null
-            ? allDevices.Select(device => new PcapDevice(device)).ToList<INetDevice>()
-            : new List<INetDevice>();
+            ? allDevices.Select(device => new PcapInterface(device)).ToList<INetInterface>()
+            : new List<INetInterface>();
     }
 }

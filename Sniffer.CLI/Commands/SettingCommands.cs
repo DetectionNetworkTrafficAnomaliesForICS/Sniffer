@@ -59,7 +59,7 @@ public class SettingCommands
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine(_settingsService.NetDevice);
+                    Console.WriteLine(_settingsService.NetInterface);
                     break;
                 case "2":
                     var devices = _netService.GetAll();
@@ -71,7 +71,7 @@ public class SettingCommands
                     var input = Console.ReadLine();
                     if (int.TryParse(input, out var index))
                     {
-                        _settingsService.NetDevice = devices[index];
+                        _settingsService.NetInterface = devices[index];
                     }
 
                     break;

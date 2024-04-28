@@ -4,6 +4,6 @@ namespace Sniffer.Lib.Repositories.Interfaces;
 
 public interface INetInterfaceRepository
 {
-    bool TryGetByName(string name, out INetDevice? result, INetDevice? defaultValue = default);
-    List<INetDevice> GetAll();
+    bool TryGetByName(string name, out INetInterface? result, INetInterface? defaultValue = default);
+    List<INetInterface> GetAll();
 }

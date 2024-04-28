@@ -3,12 +3,12 @@ using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
-public class PcapDevice : INetDevice
+public class PcapInterface : INetInterface
 {
     private readonly ICaptureDevice _captureDevice;
     public string Name => _captureDevice.Name;
 
-    public PcapDevice(ICaptureDevice captureDevice)
+    public PcapInterface(ICaptureDevice captureDevice)
     {
         _captureDevice = captureDevice;
     }

@@ -5,6 +5,6 @@ namespace Sniffer.Lib.Services.Interfaces;
 public interface ISettingsService
 {
     IFolder? TrafficFolder { get; set; }
-    INetDevice? NetDevice { get; set; }
-    IEnumerable<INetPacket.Device> ModbusServers { get; }
+    INetInterface? NetInterface { get; set; }
+    IEnumerable<INetDevice> ModbusServers { get; }
 }

@@ -36,10 +36,5 @@ public class SaveServiceImpl : ISaveService
 
             _csvRepository.TryWriteCsvFile(csvFile!, result);
         }
-
-        if (_folderRepository.TryCreateFile(_settingsService.TrafficFolder, name + ".pcap", out var pcapFile))
-        {
-            packets.GetDumpPackets.Save(pcapFile!.Path);
-        }
     }
 }

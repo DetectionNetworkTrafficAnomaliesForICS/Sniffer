@@ -14,6 +14,4 @@ public class PcapListPackets(List<PcapPacket> packets) : IListPackets
     {
         return GetEnumerator();
     }
-    
-    public IDumpPackets GetDumpPackets => new PcapDumpPackets(packets);
 }

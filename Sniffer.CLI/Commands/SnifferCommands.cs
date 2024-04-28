@@ -20,9 +20,9 @@ public class SnifferCommands
 
     public void Run()
     {
-        if (_settingsService.NetDevice != null)
+        if (_settingsService.NetInterface != null)
         {
-            var catcher = _settingsService.NetDevice.Open(_appConfig.RecheckingCancelTime, _appConfig.CapacityPackets);
+            var catcher = _settingsService.NetInterface.Open(_appConfig.RecheckingCancelTime, _appConfig.CapacityPackets);
  
             var stream = catcher.StartCapture().Filtered(new DeviceFilter(_settingsService.ModbusServers));
             
@@ -51,7 +51,7 @@ public class SnifferCommands
                     // }
                 );
             
-            _settingsService.NetDevice.Close();
+            _settingsService.NetInterface.Close();
         }
         else
         {

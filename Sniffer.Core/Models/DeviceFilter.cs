@@ -4,15 +4,15 @@ namespace Sniffer.Core.Models;
 
 public class DeviceFilter : IFilter
 {
-    private IEnumerable<INetPacket.Device> Devices { get; }
+    private IEnumerable<INetDevice> Devices { get; }
 
-    public DeviceFilter(IEnumerable<INetPacket.Device> devices)
+    public DeviceFilter(IEnumerable<INetDevice> devices)
     {
         Devices = devices;
     }
 
     public bool Check(INetPacket packet)
     {
-        return Devices.Any(device => device == packet.SourceDevice || device == packet.DestinationDevice);
+        return Devices.Any(device => device.Compare(packet.SourceDevice) || device.Compare(packet.DestinationDevice));
     }
 }

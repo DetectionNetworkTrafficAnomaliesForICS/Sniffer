@@ -1,6 +1,3 @@
 ﻿namespace Sniffer.Lib.Models;
 
-public interface IListPackets : IEnumerable<INetPacket>
-{
-    IDumpPackets GetDumpPackets { get; }
-}
+public interface IListPackets : IEnumerable<INetPacket>;

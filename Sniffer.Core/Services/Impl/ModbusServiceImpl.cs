@@ -18,7 +18,7 @@ public class ModbusServiceImpl : IModbusService
         var bytes = netPacket.Data.Reverse().ToArray();
         try
         {
-            var request = _settingsService.ModbusServers.Any(device => device == netPacket.DestinationDevice);
+            var request = _settingsService.ModbusServers.Any(device => device.Compare(netPacket.DestinationDevice));
             var tranId = BitConverter.ToUInt16(bytes, bytes.Length - 2);
             var protocolId = BitConverter.ToUInt16(bytes, bytes.Length - 4);
             var len = BitConverter.ToUInt16(bytes, bytes.Length - 6);
