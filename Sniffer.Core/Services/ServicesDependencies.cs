@@ -10,6 +10,8 @@ public static class ServicesDependencies
     {
         services.AddSingleton<ISettingsService, SettingsServiceImpl>();
         services.AddSingleton<IModbusService, ModbusServiceImpl>();
+        services.AddSingleton<IShellLauncherService, ShellLauncherServiceImpl>();
+        services.AddSingleton<IPythonLauncherService, PythonLauncherServiceImpl>();
         services.AddSingleton<INetService, NetInterfaceServiceImpl>();
         services.AddSingleton<ISaveService, SaveServiceImpl>();
     }

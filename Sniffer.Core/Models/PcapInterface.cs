@@ -28,6 +28,6 @@ public class PcapInterface : INetInterface
 
     public override string ToString()
     {
-        return _captureDevice.Description;
+        return _captureDevice.Description +"/"+ _captureDevice.Name;
     }
 }

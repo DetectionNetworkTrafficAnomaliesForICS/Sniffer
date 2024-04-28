@@ -7,13 +7,16 @@ public class MainWorker : BackgroundService
 {
     private readonly SettingCommands _settingCommands;
     private readonly SnifferCommands _snifferCommands;
+    private readonly AnalysisCommands _analysisCommands;
     private readonly IHostApplicationLifetime _applicationLifetime;
 
-    public MainWorker(SettingCommands settingCommands, SnifferCommands snifferCommands, IHostApplicationLifetime applicationLifetime)
+    public MainWorker(SettingCommands settingCommands, SnifferCommands snifferCommands,
+        IHostApplicationLifetime applicationLifetime, AnalysisCommands analysisCommands)
     {
         _settingCommands = settingCommands;
         _snifferCommands = snifferCommands;
         _applicationLifetime = applicationLifetime;
+        _analysisCommands = analysisCommands;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -29,8 +32,9 @@ public class MainWorker : BackgroundService
             Console.WriteLine("-------------------------------");
             Console.WriteLine(">Menu:");
             Console.WriteLine("1. Start Sniffer");
-            Console.WriteLine("2. Setting");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("2. Analysis");
+            Console.WriteLine("3. Setting");
+            Console.WriteLine("4. Exit");
 
             Console.Write(">Enter your choice: ");
             var choice = Console.ReadLine();
@@ -41,9 +45,12 @@ public class MainWorker : BackgroundService
                     _snifferCommands.Run();
                     break;
                 case "2":
-                    _settingCommands.Run();
+                    _analysisCommands.Run();
                     break;
                 case "3":
+                    _settingCommands.Run();
+                    break;
+                case "4":
                     Console.WriteLine("Exiting program. Goodbye!");
                     _applicationLifetime.StopApplication();
                     break;

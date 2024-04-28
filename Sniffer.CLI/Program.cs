@@ -31,6 +31,7 @@ internal static class Program
                 services.RegisterRepositoriesDependencies();
                 services.AddSingleton<SettingCommands>();
                 services.AddSingleton<SnifferCommands>();
+                services.AddSingleton<AnalysisCommands>();
             });
     }
 }

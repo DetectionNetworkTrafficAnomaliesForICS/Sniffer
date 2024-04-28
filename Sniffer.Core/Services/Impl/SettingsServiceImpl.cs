@@ -24,13 +24,8 @@ public class SettingsServiceImpl : ISettingsService
                 return folder;
             }
 
-            if (_appConfig.Value.DefaultFolder != null)
-            {
-                _folderRepository.TryGetByPath(_appConfig.Value.DefaultFolder.Path, out var folderDefault);
-                return folderDefault;
-            }
-
-            return default;
+            _folderRepository.TryGetByPath(_appConfig.Value.DefaultFolder.Path, out var folderDefault);
+            return folderDefault;
         }
         set
         {
@@ -49,33 +44,18 @@ public class SettingsServiceImpl : ISettingsService
                 return device;
             }
 
-            if (_appConfig.Value.DefaultNetDevice != null)
-            {
-                _netInterfaceRepository.TryGetByName(_appConfig.Value.DefaultNetDevice.Name, out var deviceDefault);
-                return deviceDefault;
-            }
-
-            return default;
+            Console.WriteLine($"{_appConfig.Value.DefaultNetInterface}");
+            _netInterfaceRepository.TryGetByName(_appConfig.Value.DefaultNetInterface.Name, out var deviceDefault);
+            return deviceDefault;
         }
         set
         {
-            if (value != null)
-                _preferenceRepository.TrySet(nameof(NetInterface), value.Name);
+             if (value == null) return;
+            _preferenceRepository.TrySet(nameof(NetInterface), value.Name);
         }
     }
 
-    public IEnumerable<INetDevice> ModbusServers
-    {
-        get
-        {
-            if (_appConfig.Value.ModbusServers == null)
-            {
-                return new List<NetDevice>();
-            }
-
-            return _appConfig.Value.ModbusServers;
-        }
-    }
+    public IEnumerable<INetDevice> ModbusServers => _appConfig.Value.ModbusServers;
 
     public SettingsServiceImpl(INetInterfaceRepository netInterfaceRepository, IFolderRepository folderRepository,
         IPreferenceRepository preferenceRepository, IOptions<AppConfiguration> appConfig)
