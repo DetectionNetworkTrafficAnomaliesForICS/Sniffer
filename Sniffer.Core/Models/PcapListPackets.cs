@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using PcapDotNet.Packets;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;

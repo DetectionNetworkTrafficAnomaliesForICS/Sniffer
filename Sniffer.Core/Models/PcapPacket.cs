@@ -1,4 +1,5 @@
-﻿using PcapDotNet.Packets;
+﻿using PacketDotNet;
+using SharpPcap;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
@@ -15,31 +16,30 @@ public class PcapPacket : INetPacket
     public ushort CheckSum { get; }
 
     public byte[] Data { get; }
-    
-    public Packet Packet { get; }
-    
-    public PcapPacket(Packet packetCapture)
+
+    // public PacketCapture Packet { get; }
+
+    public PcapPacket(PacketCapture packetCapture)
     {
-        Packet = packetCapture;
         DateTime = DateTime.Now;
-        var ethernetPacket = packetCapture.Ethernet;
-        var ipPacket = ethernetPacket.IpV4;
-        var tcpPacket = ipPacket.Tcp;
+        var rawPacket = packetCapture.GetPacket();
 
-        if (tcpPacket.Payload == null)
-        {
-            throw new Exception("Not valid packet!");
-        }
+        var packet = Packet.ParsePacket(rawPacket.LinkLayerType, rawPacket.Data);
 
-        SourceDevice = new INetPacket.Device(tcpPacket.SourcePort,
-            ethernetPacket.Source.ToString(), ipPacket.Source.ToString());
-        DestinationDevice = new INetPacket.Device(tcpPacket.DestinationPort,
-            ethernetPacket.Destination.ToString(), ipPacket.Destination.ToString());
+        var ethernetPacket = packet.Extract<EthernetPacket>();
+        var ipPacket = packet.Extract<IPPacket>();
+        var tcpPacket = packet.Extract<TcpPacket>();
 
-        Ttl = ipPacket.Ttl;
+        SourceDevice = new INetPacket.Device(tcpPacket.SourcePort
+            , ethernetPacket.SourceHardwareAddress.ToString(), ipPacket.SourceAddress.ToString());
+        DestinationDevice = new INetPacket.Device(tcpPacket.DestinationPort
+            , ethernetPacket.DestinationHardwareAddress.ToString(), ipPacket.DestinationAddress.ToString());
+
+        Ttl = (uint)ipPacket.TimeToLive;
         AcknowledgementNumber = tcpPacket.AcknowledgmentNumber;
         SequenceNumber = tcpPacket.SequenceNumber;
         CheckSum = tcpPacket.Checksum;
-        Data = tcpPacket.Payload.ToArray();
+
+        Data = tcpPacket.PayloadData ?? throw new ArgumentException("No contains payload");
     }
 }

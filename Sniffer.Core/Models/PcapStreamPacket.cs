@@ -1,20 +1,9 @@
-﻿using System.Threading.Channels;
-using PcapDotNet.Core;
-using PcapDotNet.Packets;
-using Sniffer.Lib.Models;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
 public class PcapStreamPacket(IAsyncEnumerable<PcapPacket> enumerable) : IStreamPackets
 {
-    public void Dispose()
-    {
-        // _packetCommunicator.Break();
-        // _packetCommunicator.Dispose();
-    }
-
     public async Task<IListPackets> ToList()
     {
         var packets = await enumerable.ToListAsync();
@@ -25,5 +14,11 @@ public class PcapStreamPacket(IAsyncEnumerable<PcapPacket> enumerable) : IStream
     public IStreamPackets Filtered(IFilter filter)
     {
         return new PcapStreamPacket(enumerable.Where(filter.Check));
+    }
+
+    public IStreamPackets Foreach(Action<INetPacket> func)
+    {
+        enumerable.ForEachAsync(func.Invoke);
+        return this;
     }
 }

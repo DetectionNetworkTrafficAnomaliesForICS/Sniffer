@@ -1,55 +1,46 @@
 ﻿using System.Threading.Channels;
-using PcapDotNet.Core;
+using SharpPcap;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
 public class PcapNetCatcher  : INetCatcher
 {
-    private readonly PacketCommunicator _packetCommunicator;
+    private readonly ICaptureDevice _captureDevice;
     private readonly Channel<PcapPacket> _channel;
     
-    public IStreamPackets StreamPackets => new PcapStreamPacket(_channel.Reader.ReadAllAsync());
 
-    public PcapNetCatcher(PacketCommunicator packetCommunicator, int capacity)
+    public PcapNetCatcher(ICaptureDevice captureDevice, int capacity)
     {
-        _packetCommunicator = packetCommunicator;
+        _captureDevice = captureDevice;
         _channel = Channel.CreateBounded<PcapPacket>(new BoundedChannelOptions(capacity)
         {
-            FullMode = BoundedChannelFullMode.Wait
+            FullMode = BoundedChannelFullMode.DropOldest
         });
     }
 
-    public async void Capture(CancellationToken cancellationToken)
+    void PacketArrivalEventHandler(object sender, PacketCapture e)
     {
-        await Task.Run(() =>
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                var result = _packetCommunicator.ReceivePacket(out var p);
-                if (result == PacketCommunicatorReceiveResult.Ok)
-                {
-                    PcapPacket? pcap;
-                    try
-                    {
-                        pcap = new PcapPacket(p);
-                    }
-                    catch (Exception)
-                    {
-                     continue;
-                    }
-                    
-                    _channel.Writer.WriteAsync(pcap, cancellationToken);
-                }
-            }
-        }, cancellationToken);
-        
-        _channel.Writer.Complete();
+        _channel.Writer.WriteAsync(new PcapPacket(e));
     }
-
+    
     public void Dispose()
     {
-        _packetCommunicator.Break();
-        _packetCommunicator.Dispose();
+        _captureDevice.Dispose();
+    }
+
+    public IStreamPackets StartCapture()
+    {
+        _captureDevice.OnPacketArrival += PacketArrivalEventHandler;
+        _captureDevice.StartCapture();
+        
+        return new PcapStreamPacket(_channel.Reader.ReadAllAsync());
+    }
+
+    public void StopCapture()
+    {
+        _captureDevice.StopCapture();
+        _channel.Writer.Complete();
+        _captureDevice.OnPacketArrival -= PacketArrivalEventHandler;
     }
 }

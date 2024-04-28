@@ -1,27 +1,29 @@
-﻿using PcapDotNet.Core;
+﻿using SharpPcap;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
 public class PcapDevice : INetDevice
 {
-    private readonly IPacketDevice _captureDevice;
+    private readonly ICaptureDevice _captureDevice;
     public string Name => _captureDevice.Name;
 
-    public PcapDevice(IPacketDevice captureDevice)
+    public PcapDevice(ICaptureDevice captureDevice)
     {
         _captureDevice = captureDevice;
     }
 
     public INetCatcher Open(int timeout, int capacity)
     {
-        return new PcapNetCatcher(_captureDevice.Open(655360, PacketDeviceOpenAttributes.Promiscuous, timeout),
+        _captureDevice.Open(DeviceModes.Promiscuous, timeout);
+        
+        return new PcapNetCatcher(_captureDevice,
             capacity);
     }
 
     public void Close()
     {
-        throw new NotImplementedException();
+        _captureDevice.Close();
     }
 
     public override string ToString()

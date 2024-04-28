@@ -1,4 +1,4 @@
-﻿using PcapDotNet.Core;
+﻿using SharpPcap;
 using Sniffer.Core.Models;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
@@ -11,7 +11,7 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
     {
         try
         {
-            var allDevices = LivePacketDevice.AllLocalMachine;
+            var allDevices = CaptureDeviceList.Instance;
             foreach (var device in allDevices)
             {
                 if (device.Name.Equals(name))
@@ -33,7 +33,7 @@ public class NetInterfaceRepositoryImpl : INetInterfaceRepository
 
     public List<INetDevice> GetAll()
     {
-        var allDevices = LivePacketDevice.AllLocalMachine;
+        var allDevices = CaptureDeviceList.Instance;
         return allDevices != null
             ? allDevices.Select(device => new PcapDevice(device)).ToList<INetDevice>()
             : new List<INetDevice>();

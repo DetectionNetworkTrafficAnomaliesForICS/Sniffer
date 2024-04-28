@@ -1,37 +1,37 @@
-﻿using Sniffer.Core.Models;
+﻿using Microsoft.Extensions.Options;
+using Sniffer.Core.Configuration;
+using Sniffer.Core.Models;
 using Sniffer.Lib.Services.Interfaces;
 
 namespace Sniffer.CLI.Commands;
 
 public class SnifferCommands
 {
-    private readonly ISnifferService _snifferService;
+    private readonly AppConfiguration _appConfig;
     private readonly ISettingsService _settingsService;
     private readonly ISaveService _saveService;
 
-    public SnifferCommands(ISnifferService snifferService, ISettingsService settingsService, ISaveService saveService)
+    public SnifferCommands(ISettingsService settingsService,IOptions<AppConfiguration> appConfig, ISaveService saveService)
     {
-        _snifferService = snifferService;
         _settingsService = settingsService;
         _saveService = saveService;
+        _appConfig = appConfig.Value;
     }
 
     public void Run()
     {
         if (_settingsService.NetDevice != null)
         {
-            var cancelToken = new CancellationTokenSource();
-
-
-            var taskCapture = _snifferService.CapturePacketsAsync(_settingsService.NetDevice,
-                new DeviceFilter(_settingsService.ModbusServers), cancelToken.Token);
-
+            var catcher = _settingsService.NetDevice.Open(_appConfig.RecheckingCancelTime, _appConfig.CapacityPackets);
+ 
+            var stream = catcher.StartCapture().Filtered(new DeviceFilter(_settingsService.ModbusServers));
+            
             Console.WriteLine("Press `Enter` to finish");
             Console.ReadLine();
 
-            cancelToken.Cancel();
+            catcher.StopCapture();
 
-            var packets = taskCapture.Result;
+            var packets = stream.ToList().Result;
 
             Console.WriteLine($"{packets.Count()} files intercepted");
             Console.WriteLine("Write a name to save");
@@ -50,6 +50,8 @@ public class SnifferCommands
                     //               modbusPacket.Request && BitConverter.ToSingle(modbusPacket.PayloadBytes, 0) > 4.2f
                     // }
                 );
+            
+            _settingsService.NetDevice.Close();
         }
         else
         {

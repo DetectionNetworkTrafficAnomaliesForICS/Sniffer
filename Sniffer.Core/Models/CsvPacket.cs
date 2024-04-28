@@ -39,7 +39,7 @@ public class CsvPacket
         Packet = modbusPacket;
         PayloadTcp = netPacket.Data;
         DateTime = netPacket.DateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-
+        
         Anomaly = modbusPacket.PayloadBytes != null &&
                   modbusPacket.Request && BitConverter.ToSingle(modbusPacket.PayloadBytes, 0) > 10f;
     }

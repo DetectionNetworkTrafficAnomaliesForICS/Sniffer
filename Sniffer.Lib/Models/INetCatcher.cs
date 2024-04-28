@@ -2,6 +2,6 @@
 
 public interface INetCatcher : IDisposable
 {
-   IStreamPackets StreamPackets { get; }
-   void Capture(CancellationToken cancellationToken);
+   IStreamPackets StartCapture();
+   void StopCapture();
 }
