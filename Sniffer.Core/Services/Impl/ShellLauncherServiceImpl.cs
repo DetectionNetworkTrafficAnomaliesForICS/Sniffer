@@ -43,6 +43,13 @@ public class ShellLauncherServiceImpl : IShellLauncherService
 
         if (redirectErr)
         {
+            process.ErrorDataReceived += (sender, e) =>
+            {
+                if (e.Data != null)
+                {
+                    Console.WriteLine(e.Data);
+                }
+            };
             process.BeginErrorReadLine();
         }
 
@@ -52,7 +59,7 @@ public class ShellLauncherServiceImpl : IShellLauncherService
             try
             {
                 var request = await input.ReadAsync(cancellationToken);
-                await process.StandardInput.WriteLineAsync(request);
+                await process.StandardInput.WriteAsync(request);
             }
             catch (OperationCanceledException)
             {

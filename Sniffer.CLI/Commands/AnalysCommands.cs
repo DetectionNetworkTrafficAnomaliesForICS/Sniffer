@@ -30,7 +30,7 @@ public class AnalysisCommands
 
             var stream = catcher.StartCapture().Filtered(new DeviceFilter(_settingsService.ModbusServers));
 
-            var script = new ModelScript();
+            var script = new ModelScript("C:\\Users\\rodio\\PycharmProjects\\ML-Diploma\\experiments\\data.pickle");
             var token = new CancellationTokenSource();
           
             _launcherService.Launch(_appConfig.Script, script, token.Token);

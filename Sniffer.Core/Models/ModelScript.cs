@@ -1,19 +1,41 @@
-﻿using System.Runtime.Serialization.Json;
+﻿using System.Globalization;
+using System.Reflection;
+using System.Runtime.Serialization.Json;
 using System.Threading.Channels;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Sniffer.Lib.Models;
 
 namespace Sniffer.Core.Models;
 
 public class ModelScript : IScript
 {
-    public string[] Arguments { get; } = [];
+    private string Predict { get; }
+
+    public string[] Arguments { get; }
 
     public Channel<string> Output { get; } = Channel.CreateUnbounded<string>();
     public Channel<string> Input { get; } = Channel.CreateUnbounded<string>();
 
+    public ModelScript(string predict)
+    {
+        Predict = predict;
+        Arguments = [Predict];
+    }
+
     public string Check(CsvPacket packet)
     {
-        Input.Writer.WriteAsync($"{packet.SourceIpAddress}---->{packet.DestinationIpAddress}").AsTask();
+        using var writer = new StringWriter();
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            HasHeaderRecord = false
+        };
+        using var csv = new CsvWriter(writer, config);
+
+        csv.WriteRecords([packet]);
+        writer.Flush();
+
+        Input.Writer.WriteAsync(writer.ToString()).AsTask();
 
         return Output.Reader.ReadAsync().AsTask().Result;
     }

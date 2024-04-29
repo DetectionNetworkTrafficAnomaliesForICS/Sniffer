@@ -15,7 +15,7 @@ public class NetDevice : INetDevice
         MacAddress = macAddress;
         IpAddress = ipAddress;
     }
-    
+
     public bool Compare(INetDevice device)
     {
         return Port == device.Port && IpAddress == device.IpAddress && MacAddress == device.MacAddress;
