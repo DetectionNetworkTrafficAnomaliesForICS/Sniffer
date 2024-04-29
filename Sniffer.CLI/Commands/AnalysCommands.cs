@@ -9,14 +9,17 @@ public class AnalysisCommands
 {
     private readonly ISettingsService _settingsService;
     private readonly IModbusService _modbusService;
-    private readonly AppConfiguration _appConfig;
+    private readonly ModelsConfiguration _modelsConfiguration;
+    private readonly AppConfiguration _appConfiguration;
     private readonly IPythonLauncherService _launcherService;
 
-    public AnalysisCommands(ISettingsService settingsService, IOptions<AppConfiguration> options,
+    public AnalysisCommands(ISettingsService settingsService, IOptions<AppConfiguration> aOptions,
+        IOptions<ModelsConfiguration> mOptions,
         IPythonLauncherService launcherService, IModbusService modbusService)
     {
         _settingsService = settingsService;
-        _appConfig = options.Value;
+        _modelsConfiguration = mOptions.Value;
+        _appConfiguration = aOptions.Value;
         _launcherService = launcherService;
         _modbusService = modbusService;
     }
@@ -26,14 +29,15 @@ public class AnalysisCommands
         if (_settingsService.NetInterface != null)
         {
             var catcher =
-                _settingsService.NetInterface.Open(_appConfig.RecheckingCancelTime, _appConfig.CapacityPackets);
+                _settingsService.NetInterface.Open(_appConfiguration.RecheckingCancelTime,
+                    _appConfiguration.CapacityPackets);
 
             var stream = catcher.StartCapture().Filtered(new DeviceFilter(_settingsService.ModbusServers));
 
-            var script = new ModelScript("C:\\Users\\rodio\\PycharmProjects\\ML-Diploma\\experiments\\data.pickle");
+            var script = new ModelScript(_modelsConfiguration.Predict, _modelsConfiguration.Models);
             var token = new CancellationTokenSource();
-          
-            _launcherService.Launch(_appConfig.Script, script, token.Token);
+
+            _launcherService.Launch(_modelsConfiguration.Script, script, token.Token);
 
             stream.Foreach(packet =>
             {
@@ -49,9 +53,8 @@ public class AnalysisCommands
 
             catcher.StopCapture();
             _settingsService.NetInterface.Close();
-            
+
             token.Cancel();
-             
         }
     }
 }

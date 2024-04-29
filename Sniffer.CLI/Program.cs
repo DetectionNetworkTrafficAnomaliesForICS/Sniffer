@@ -26,6 +26,9 @@ internal static class Program
             {
                 services.AddOptions();
                 services.Configure<AppConfiguration>(hostContext.Configuration.GetSection(nameof(AppConfiguration)));
+                services.Configure<FolderConfiguration>(hostContext.Configuration.GetSection(nameof(FolderConfiguration)));
+                services.Configure<NetConfiguration>(hostContext.Configuration.GetSection(nameof(NetConfiguration)));
+                services.Configure<ModelsConfiguration>(hostContext.Configuration.GetSection(nameof(ModelsConfiguration)));
                 services.AddHostedService<MainWorker>();
                 services.RegisterServicesDependencies();
                 services.RegisterRepositoriesDependencies();

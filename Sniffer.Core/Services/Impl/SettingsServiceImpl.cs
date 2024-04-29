@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using Sniffer.Core.Configuration;
-using Sniffer.Core.Models;
 using Sniffer.Lib.Models;
 using Sniffer.Lib.Repositories.Interfaces;
 using Sniffer.Lib.Services.Interfaces;
@@ -12,7 +11,8 @@ public class SettingsServiceImpl : ISettingsService
     private readonly INetInterfaceRepository _netInterfaceRepository;
     private readonly IFolderRepository _folderRepository;
     private readonly IPreferenceRepository _preferenceRepository;
-    private readonly IOptions<AppConfiguration> _appConfig;
+    private readonly FolderConfiguration _folderConfiguration;
+    private readonly NetConfiguration _netConfiguration;
 
     public IFolder? TrafficFolder
     {
@@ -24,7 +24,7 @@ public class SettingsServiceImpl : ISettingsService
                 return folder;
             }
 
-            _folderRepository.TryGetByPath(_appConfig.Value.DefaultFolder.Path, out var folderDefault);
+            _folderRepository.TryGetByPath(_folderConfiguration.Path, out var folderDefault);
             return folderDefault;
         }
         set
@@ -43,25 +43,27 @@ public class SettingsServiceImpl : ISettingsService
                 _netInterfaceRepository.TryGetByName(name!, out var device);
                 return device;
             }
-            
-            _netInterfaceRepository.TryGetByName(_appConfig.Value.DefaultNetInterface.Name, out var deviceDefault);
+
+            _netInterfaceRepository.TryGetByName(_netConfiguration.Name, out var deviceDefault);
             return deviceDefault;
         }
         set
         {
-             if (value == null) return;
+            if (value == null) return;
             _preferenceRepository.TrySet(nameof(NetInterface), value.Name);
         }
     }
 
-    public IEnumerable<INetDevice> ModbusServers => _appConfig.Value.ModbusServers;
+    public IEnumerable<INetDevice> ModbusServers => _netConfiguration.ModbusServers;
 
     public SettingsServiceImpl(INetInterfaceRepository netInterfaceRepository, IFolderRepository folderRepository,
-        IPreferenceRepository preferenceRepository, IOptions<AppConfiguration> appConfig)
+        IPreferenceRepository preferenceRepository, IOptions<FolderConfiguration> folderConfiguration,
+        IOptions<NetConfiguration> netConfiguration)
     {
         _netInterfaceRepository = netInterfaceRepository;
         _folderRepository = folderRepository;
         _preferenceRepository = preferenceRepository;
-        _appConfig = appConfig;
+        _netConfiguration = netConfiguration.Value;
+        _folderConfiguration = folderConfiguration.Value;
     }
 }

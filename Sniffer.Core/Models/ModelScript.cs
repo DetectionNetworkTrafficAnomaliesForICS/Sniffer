@@ -11,16 +11,19 @@ namespace Sniffer.Core.Models;
 public class ModelScript : IScript
 {
     private string Predict { get; }
+    
+    private string Model { get; }
 
     public string[] Arguments { get; }
 
     public Channel<string> Output { get; } = Channel.CreateUnbounded<string>();
     public Channel<string> Input { get; } = Channel.CreateUnbounded<string>();
 
-    public ModelScript(string predict)
+    public ModelScript(string predict, string model)
     {
         Predict = predict;
-        Arguments = [Predict];
+        Model = model;
+        Arguments = [Predict, Model];
     }
 
     public string Check(CsvPacket packet)
