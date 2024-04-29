@@ -43,8 +43,7 @@ public class SettingsServiceImpl : ISettingsService
                 _netInterfaceRepository.TryGetByName(name!, out var device);
                 return device;
             }
-
-            Console.WriteLine($"{_appConfig.Value.DefaultNetInterface}");
+            
             _netInterfaceRepository.TryGetByName(_appConfig.Value.DefaultNetInterface.Name, out var deviceDefault);
             return deviceDefault;
         }
