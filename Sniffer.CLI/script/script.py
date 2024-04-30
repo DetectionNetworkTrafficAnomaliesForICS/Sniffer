@@ -12,7 +12,7 @@ if len(sys.argv) == 3:
         loaded_data = pickle.load(file)
 
     while True:
-        line = input()
+        inn = input()
 
         column = [
             'date_time', 'source_port', 'source_mac_address', 'source_ip_address', 'destination_port',
@@ -23,7 +23,7 @@ if len(sys.argv) == 3:
             'payload_bytes',
             'function', 'anomaly']
 
-        df = pd.read_csv(StringIO(line), index_col='date_time', parse_dates=True, header=None, names=column,
+        df = pd.read_csv(StringIO(inn), index_col='date_time', parse_dates=True, header=None, names=column,
                          dtype={'destination_mac_address': object, 'source_mac_address': object})
 
-        print(loaded_data.preprocess(df))
+        print(loaded_data.transform(df))
